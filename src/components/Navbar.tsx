@@ -1,9 +1,14 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { TbEmergencyBed } from "react-icons/tb";
 import { GiHospitalCross } from "react-icons/gi";
+import { usePathname } from "next/navigation";
+import classnames from "classnames";
 
 const Navbar = () => {
+  const currentPath = usePathname();
+  console.log(currentPath);
   const links = [
     { label: "Dashboard", href: "/" },
     { label: "Patients", href: "/patients" },
@@ -17,14 +22,18 @@ const Navbar = () => {
     "
     >
       <Link href="/">
-        <GiHospitalCross className="w-14 h-14 bg-green-500 hover:bg-green-600 p-2 text-white rounded-full " />
+        <GiHospitalCross className="w-14 h-14 transition-colors bg-green-500 hover:bg-teal-500 p-2 text-white rounded-full " />
       </Link>
 
       <ul className="flex space-x-10 ">
         {links.map((link) => (
           <Link
             key={link.href}
-            className="font-bold text-xl text-green-500 hover:text-green-600 transition-colors"
+            className={classnames({
+              "text-teal-900": link.href === currentPath,
+              "text-teal-500": link.href !== currentPath,
+              "hover:text-teal-700 transition-colors text-xl font-bold":true 
+            })}
             href={link.href}
           >
             <li>{link.label}</li>
