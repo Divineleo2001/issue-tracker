@@ -1,18 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/../prisma/client";
-
-const createPatientSchema = z.object({
-  firstName: z.string().min(2).max(255),
-  lastName: z.string().min(2).max(255),
-  email: z.string().email(),
-  age: z.number().min(1).max(150),
-  mobileNumber: z
-    .string()
-    .min(10)
-    .max(20),
-  remarks: z.string().min(1),
-});
+import { createPatientSchema } from "@/app/utils/ValidationSchema";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();

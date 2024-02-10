@@ -6,29 +6,38 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { createFormPatientSchema, createPatientSchema } from "@/app/utils/ValidationSchema";
+import ErrorComponent from "@/components/Errors/ErrorComponent";
 
-interface PatientForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  mobileNumber: string;
-  remarks: string;
-}
-
+type PatientForm = z.infer<typeof createPatientSchema>;
+// interface PatientForm {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   age: number;
+//   mobileNumber: string;
+//   remarks: string;
+// }
 const NewPatientPage = () => {
   const router = useRouter();
-
-  const { register, control, handleSubmit } = useForm<PatientForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PatientForm>({
+    resolver: zodResolver(createFormPatientSchema),
+  });
   return (
-    <div>
+    <div className="max-w-lg mx-auto mt-10 ">
       <form
-        className="max-w-lg mx-auto space-y-10"
+        className="flex flex-col gap-5"
         onSubmit={handleSubmit(
-          //   (data) => {
-          //     data.age = parseInt(data.age);
-          //     console.log(data);
-          //   }
+          // (data) => {
+          //   data.age = parseInt(data.age);
+          //   console.log(data);
+          // }
 
           async (data) => {
             data.age = parseInt(data.age);
@@ -37,34 +46,49 @@ const NewPatientPage = () => {
           }
         )}
       >
-        <h1 className="text-center text-2xl mt-10">New Patient</h1>
-        <Input
-          className="mt-10"
-          placeholder="FirstName"
-          {...register("firstName")}
-        />
-        <Input
-          className="mt-10"
-          placeholder="LastName"
-          {...register("lastName")}
-        />
-        <Input className="mt-10" placeholder="Email" {...register("email")} />
-        <Input
-          className="mt-10"
-          placeholder="Age"
-          type="number"
-          {...register("age")}
-        />
-        <Input
-          className="mt-10"
-          placeholder="Mobile Number"
-          {...register("mobileNumber")}
-        />
-        <Textarea
-          className="mt-10"
-          placeholder="Remarks"
-          {...register("remarks")}
-        />
+        <h1 className="text-center text-2xl ">New Patient</h1>
+
+        {errors.firstName && (
+          <ErrorComponent
+            alertTitle="First Name"
+            message={errors.firstName.message}
+          />
+        )}
+        <Input placeholder="FirstName" {...register("firstName")} />
+
+        {errors.lastName && (
+          <ErrorComponent
+            alertTitle="Last Name"
+            message={errors.lastName.message}
+          />
+        )}
+        <Input placeholder="LastName" {...register("lastName")} />
+
+        {errors.email && (
+          <ErrorComponent alertTitle="Email" message={errors.email.message} />
+        )}
+        <Input placeholder="Email" {...register("email")} />
+
+        {errors.age && (
+          <ErrorComponent alertTitle="Age" message={errors.age.message} />
+        )}
+        <Input placeholder="Age" type="number" {...register("age")} />
+
+        {errors.mobileNumber && (
+          <ErrorComponent
+            alertTitle="Mobile Number"
+            message={errors.mobileNumber.message}
+          />
+        )}
+        <Input placeholder="Mobile Number" {...register("mobileNumber")} />
+
+        {errors.remarks && (
+          <ErrorComponent
+            alertTitle="Remarks"
+            message={errors.remarks.message}
+          />
+        )}
+        <Textarea placeholder="Remarks" {...register("remarks")} />
         <Button>Add New Patient</Button>
       </form>
     </div>
