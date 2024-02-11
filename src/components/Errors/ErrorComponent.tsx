@@ -11,6 +11,7 @@ const ErrorComponent: React.FC<ErrorComponentProps> = ({
   alertTitle,
   message,
 }) => {
+  if (!message) return null;
   return (
     <>
       {message ? (

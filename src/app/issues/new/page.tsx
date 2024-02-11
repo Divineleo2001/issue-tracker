@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchema } from "@/app/utils/ValidationSchema";
 import { z } from "zod";
 import ErrorComponent from "@/components/Errors/ErrorComponent";
+import Spinner from "@/components/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -22,14 +23,17 @@ const NewIssuePage = () => {
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting]  = useState(false)
 
   const onSubmit = async (data: IssueForm) => {
     try {
+      setIsSubmitting(true);
       await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
-      setError(error);
+      setIsSubmitting(false);
+      setError("An error occurred while submitting the form.");
     }
   };
 
@@ -37,22 +41,21 @@ const NewIssuePage = () => {
     <div className="max-w-lg mx-auto mt-10">
       <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-center text-2xl mt-10">New Issue</h1>
-        {errors.title && (
-          <ErrorComponent alertTitle="Title" message={errors.title.message} />
-        )}
+
+        <ErrorComponent alertTitle="Title" message={errors.title?.message} />
         <Input className="" placeholder="Title" {...register("title")} />
 
-        {errors.description && (
-          <ErrorComponent
-            alertTitle="Description"
-            message={errors.description.message}
-          />
-        )}
+        <ErrorComponent
+          alertTitle="Description"
+          message={errors.description?.message}
+        />
+
         <Textarea placeholder="Description" {...register("description")} />
 
-        <Button type="submit">Submit New Issue</Button>
+        <Button type="submit">
+          Submit New Issue <Spinner />
+        </Button>
 
-        {error && <p className="text-red-500">{error.message}</p>}
       </form>
     </div>
   );

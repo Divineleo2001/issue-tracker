@@ -10,7 +10,7 @@ export const createFormPatientSchema = z.object({
   lastName: z.string().min(2).max(255),
   email: z.string().email(),
   age: z.string().regex(/^\d+$/),
-  mobileNumber: z.string().min(10).max(20),
+  mobileNumber: z.string().min(10,"The number must be of 10 digits").max(20),
   remarks: z.string().min(1),
 });
 
