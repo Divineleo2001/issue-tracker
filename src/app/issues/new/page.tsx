@@ -24,7 +24,7 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting]  = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data: IssueForm) => {
     try {
@@ -53,9 +53,9 @@ const NewIssuePage = () => {
         <Textarea placeholder="Description" {...register("description")} />
 
         <Button type="submit">
-          Submit New Issue <Spinner />
+          Submit New Issue
+          {isSubmitting && <Spinner />}
         </Button>
-
       </form>
     </div>
   );

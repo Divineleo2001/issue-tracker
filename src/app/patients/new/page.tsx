@@ -45,8 +45,9 @@ const NewPatientPage = () => {
       router.push("/patients");
     } catch (error) {
       setIsSubmitting(false);
-      setError("An unexpected error occurred");
+      setError(`An unexpected error occurred: ${error}`,);
     }
+    // console.log(error)
   };
   return (
     <div className="max-w-lg mx-auto mt-10 ">
