@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     data: {
       title: body.title,
       description: body.description,
+      patientId: body.patientId,
     },
   });
   return NextResponse.json(newIssue, {

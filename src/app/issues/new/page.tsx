@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@/app/utils/ValidationSchema";
+import { createFormIssueSchema, createIssueSchema } from "@/app/utils/ValidationSchema";
 import { z } from "zod";
 import ErrorComponent from "@/components/Errors/ErrorComponent";
 import Spinner from "@/components/Spinner";
@@ -21,7 +21,7 @@ const NewIssuePage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueForm>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(createFormIssueSchema),
   });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,6 +52,8 @@ const NewIssuePage = () => {
 
         <Textarea placeholder="Description" {...register("description")} />
 
+        <Input type="number" placeholder="Patient ID"/>
+        
         <Button type="submit">
           Submit New Issue
           {isSubmitting && <Spinner />}

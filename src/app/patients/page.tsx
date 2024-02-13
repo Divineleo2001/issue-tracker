@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import prisma from "@/../prisma/client";
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -18,8 +19,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+
 const PatientsPage = async () => {
-  const patients = await prisma.patient.findMany();
+  const patients = await prisma.patient.findMany({
+    include:{
+      issues: true
+    }
+  });
+
+
   return (
     <div>
       <Link href="/patients/new">
@@ -32,10 +41,10 @@ const PatientsPage = async () => {
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Age</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Joined At</TableHead>
+              <TableHead className="hide-md">Age</TableHead>
+              <TableHead className="hide-md">Email</TableHead>
+              <TableHead className="">Status</TableHead>
+              <TableHead className="hide-md">Joined At</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -55,7 +64,22 @@ const PatientsPage = async () => {
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>{`${patient.firstName} ${patient.lastName}`}</DialogTitle>
-                        <DialogDescription></DialogDescription>
+                        <DialogDescription>
+                          {patient.issues.map((issue) => (
+                            <div key={issue.id}>
+                              <p>
+
+                              {issue.title}
+                              </p>
+                              <p>
+
+                              {issue.description}
+                              </p>
+                              </div>
+                            
+                          ))}
+                          
+                        </DialogDescription>
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>

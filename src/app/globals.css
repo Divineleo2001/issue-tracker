@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .hide-md {
+    @apply hidden md:table-cell;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
