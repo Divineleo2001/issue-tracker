@@ -20,14 +20,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-
 const PatientsPage = async () => {
   const patients = await prisma.patient.findMany({
-    include:{
-      issues: true
-    }
+    include: {
+      issues: true,
+    },
   });
-
 
   return (
     <div>
@@ -67,22 +65,17 @@ const PatientsPage = async () => {
                         <DialogDescription>
                           {patient.issues.map((issue) => (
                             <div key={issue.id}>
-                              <p>
-
-                              {issue.title}
-                              </p>
-                              <p>
-
-                              {issue.description}
-                              </p>
-                              </div>
-                            
+                              <p>{issue.title}</p>
+                              <p>{issue.description}</p>
+                            </div>
                           ))}
-                          
                         </DialogDescription>
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>
+                  <Link href={`/patients/${patient.id}/newissue`}>
+                    <Button>Add New Issue</Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

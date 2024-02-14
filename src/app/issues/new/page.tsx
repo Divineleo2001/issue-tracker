@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFormIssueSchema, createIssueSchema } from "@/app/utils/ValidationSchema";
+import {
+  createFormIssueSchema,
+  createIssueSchema,
+} from "@/app/utils/ValidationSchema";
 import { z } from "zod";
 import ErrorComponent from "@/components/Errors/ErrorComponent";
 import Spinner from "@/components/Spinner";
@@ -27,14 +30,17 @@ const NewIssuePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data: IssueForm) => {
+    console.log(data);
     try {
       setIsSubmitting(true);
+      data.patientId = parseInt(data.patientId?.toString());
       await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
       setIsSubmitting(false);
-      setError("An error occurred while submitting the form.");
+      setError(`An error occurred while submitting the form. ${error}`);
     }
+    console.log(error)
   };
 
   return (
@@ -52,8 +58,8 @@ const NewIssuePage = () => {
 
         <Textarea placeholder="Description" {...register("description")} />
 
-        <Input type="number" placeholder="Patient ID"/>
-        
+        <Input placeholder="Patient ID" {...register("patientId")} />
+
         <Button type="submit">
           Submit New Issue
           {isSubmitting && <Spinner />}
