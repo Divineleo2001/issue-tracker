@@ -10,14 +10,7 @@ export async function POST(request: NextRequest) {
       status: 400,
     });
     const newPatient = await prisma.patient.create({
-        data: {
-            firstName: body.firstName,
-            lastName: body.lastName,
-            email: body.email,
-            age: body.age,
-            mobileNumber: body.mobileNumber,
-            remarks: body.remarks
-        }
+        data: validation.data,
     })
     
     return NextResponse.json(newPatient, {

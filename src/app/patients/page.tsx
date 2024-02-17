@@ -24,7 +24,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const PatientsPage = async () => {
   const patients = await prisma.patient.findMany({
     include: {
-      issues: true,
+      comments: true,
     },
   });
 
@@ -40,7 +40,7 @@ const PatientsPage = async () => {
         </Link>
         <div className="lg:hidden md:grid md:grid-cols-2">
           {patients.map((patient, index) => (
-            <div className="">
+            <div key={patient.id}>
               <Card key={patient.id} className=" p-5 m-5 ">
                 <CardHeader>
                   <CardTitle>
@@ -55,18 +55,64 @@ const PatientsPage = async () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="">
+                  <div className="flex flex-col">
                     <div>
                       <div className="grid grid-cols-2 gap-2 mt-2 ">
                         <Button className="md:w-32">Vitals</Button>
                         <Button className="md:w-32">Comorbidities</Button>
                         <Button className="md:w-32">Disablities</Button>
                         <Button className="md:w-32">Previous History</Button>
+                      </div>
+                      <div className="flex gap-2 flex-col mt-4">
                         <Button>
-                          <Link href={`/patients/${patient.id}/newissue`}>
-                            Add New Issue
+                          <Link href={`/patients/${patient.id}/newcomment`}>
+                            Add New Comment
                           </Link>
                         </Button>
+                        <Dialog>
+                          <DialogTrigger>
+                            <div className="btn-primary">View</div>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>{`${patient.firstName} ${patient.lastName}`}</DialogTitle>
+                              <DialogDescription>
+                                Further Comments can be found here
+                              </DialogDescription>
+                              {patient.comments
+                                .slice(0, 2)
+                                .map((comment, index) => (
+                                  <div
+                                    key={comment.id}
+                                    className="flex gap-1 flex-col justify-start"
+                                  >
+                                    <div>
+                                      <h2 className="text-blue-800">
+                                      <p className="text-blue-700 text-sm font-extralight">
+                                        {comment.createdAt.toDateString()}
+                                      </p>
+                                        {comment.doctorName}
+                                      </h2>{" "}
+                                      <p className="text-blue-700 text-sm font-extralight">
+                                        {comment.createdAt.toTimeString()}
+                                      </p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                      <h2>{index + 1}.</h2>
+                                      <h2>{comment.comment}</h2>
+                                    </div>
+                                  </div>
+                                ))}
+                              {patient.comments.length > 3 && (
+                                <Link
+                                  href={`/patients/${patient.id}/viewcomments`}
+                                >
+                                  <div className="text-blue-500">View More</div>
+                                </Link>
+                              )}
+                            </DialogHeader>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </div>
                     <div className="mt-4"></div>
@@ -100,8 +146,6 @@ const PatientsPage = async () => {
                   </TableCell>
                   <TableCell>
                     {`${patient.firstName} ${patient.lastName}`}
-
-                    <div>hello</div>
                   </TableCell>
 
                   <TableCell>{patient.age}</TableCell>
@@ -118,27 +162,39 @@ const PatientsPage = async () => {
                         <DialogHeader>
                           <DialogTitle>{`${patient.firstName} ${patient.lastName}`}</DialogTitle>
                           <DialogDescription>
-                            Further details can be found here
+                            Further Comments can be found here
                           </DialogDescription>
-                          {patient.issues.slice(0, 2).map((issue, index) => (
-                            <div key={issue.id} className="flex gap-1 flex-col">
-                              <div className="flex gap-2">
-                                <h2>{index + 1} .</h2>
-                                <h2>{issue.issue}</h2>
+                          {patient.comments
+                            .slice(0, 2)
+                            .map((comment, index) => (
+                              <div
+                                key={comment.id}
+                                className="flex gap-1 flex-col justify-start"
+                              >
+                                <div>
+                                  <h2 className="text-blue-800">
+                                    {comment.doctorName}
+                                  </h2>{" "}
+                                  <p className="text-blue-700">
+                                    {comment.createdAt.toTimeString()}
+                                  </p>
+                                </div>
+                                <div className="flex gap-2">
+                                  <h2>{index + 1}.</h2>
+                                  <h2>{comment.comment}</h2>
+                                </div>
                               </div>
-                              <h2>{issue.description}</h2>
-                            </div>
-                          ))}
-                          {patient.issues.length > 3 && (
-                            <Link href={`/patients/${patient.id}/viewissues`}>
+                            ))}
+                          {patient.comments.length > 3 && (
+                            <Link href={`/patients/${patient.id}/viewcomments`}>
                               <div className="text-blue-500">View More</div>
                             </Link>
                           )}
                         </DialogHeader>
                       </DialogContent>
                     </Dialog>
-                    <Link href={`/patients/${patient.id}/newissue`}>
-                      <div className="btn-primary w-36">Add New Issue</div>
+                    <Link href={`/patients/${patient.id}/newcomment`}>
+                      <Button className=" w-36">Add New Comment</Button>
                     </Link>
                   </TableCell>
                 </TableRow>
