@@ -12,17 +12,16 @@ const Navbar = () => {
   const links = [
     { label: "Dashboard", href: "/" },
     { label: "Patients", href: "/patients" },
-    { label: "Issues", href: "/issues" },
   ];
 
   return (
     <nav
       className="flex space-x-6 border-b pb-10 mt-10
-      px-10  h-14 items-center justify-between 
+      pr-10 pl-5 md:pr-0 md:pl-0    h-14 items-center justify-around 
     "
     >
       <Link href="/">
-        <GiHospitalCross className="w-14 h-14 transition-colors bg-green-500 hover:bg-teal-500 p-2 text-white rounded-full " />
+        <GiHospitalCross className="w-14 h-14 transition-colors bg-blue-500 hover:bg-blue-500 p-2 text-white rounded-full " />
       </Link>
 
       <ul className="flex space-x-10 ">
@@ -30,9 +29,9 @@ const Navbar = () => {
           <Link
             key={link.href}
             className={classnames({
-              "text-teal-900": link.href === currentPath,
-              "text-teal-500": link.href !== currentPath,
-              "hover:text-teal-700 transition-colors text-xl font-bold":true 
+              "text-blue-900": link.href === currentPath,
+              "text-blue-500": link.href !== currentPath,
+              "hover:text-blue-700 transition-colors text-xl font-bold":true 
             })}
             href={link.href}
           >

@@ -39,20 +39,18 @@ const NewPatientPage = () => {
   const onSubmit = async (data: PatientForm) => {
     try {
       setIsSubmitting(true);
-      data.age = parseInt(data.age?.toString());
-
       await axios.post("/api/patients", data);
       router.push("/patients");
     } catch (error) {
       setIsSubmitting(false);
-      setError(`An unexpected error occurred: ${error}`,);
+      setError(`An unexpected error occurred: ${error}`);
     }
     // console.log(error)
   };
   return (
-    <div className="max-w-lg mx-auto mt-10 ">
+    <div className="max-w-lg mx-auto mt-10 px-10 md:">
       <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-center text-2xl ">New Patient</h1>
+        <h1 className="text-center text-2xl font-semibold text-blue-500 ">New Patient</h1>
 
         <ErrorComponent
           alertTitle="First Name"
@@ -76,13 +74,20 @@ const NewPatientPage = () => {
 
         <Input placeholder="Age" type="number" {...register("age")} />
 
-        {errors.mobileNumber && (
+        <ErrorComponent
+          alertTitle="Mobile Number"
+          message={errors.mobileNumber?.message}
+        />
+        {/* {errors.mobileNumber && (
           <ErrorComponent
             alertTitle="Mobile Number"
             message={errors.mobileNumber.message}
           />
-        )}
+        )} */}
         <Input placeholder="Mobile Number" {...register("mobileNumber")} />
+
+        <ErrorComponent alertTitle="Gender" message={errors.gender?.message} />
+        <Input placeholder="Gender" {...register("gender")} />
 
         <ErrorComponent
           alertTitle="Remarks"
