@@ -103,3 +103,20 @@ enum PulseQuality {
   IRREGULAR
   ABSENT
 }
+
+model Comorbidities{
+  id Int @id @default(autoincrement())
+  comorbityName String @db.VarChar(255)
+  description String @db.Text
+  createdAt DateTime @default(now())
+
+}
+
+model Disabilities{
+  id Int @id @default(autoincrement())
+  disabilityName String @db.VarChar(255)
+  description String @db.Text
+  createdAt DateTime @default(now())
+
+}
+
