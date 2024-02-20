@@ -26,6 +26,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import axios from "axios";
+import Link from "next/link";
 
 type VitalsForm = z.infer<typeof createVitalsSchema>;
 
@@ -52,12 +54,32 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
   });
 
   const onSubmit = (data: VitalsForm) => {
-    console.log(data);
+    try {
+      setIsSubmitting(true);
+      const formattedData: VitalsForm = {
+        ...data,
+        patientId: Number(data.patientId),
+        breathingRate: Number(data.breathingRate),
+        pulseRate: Number(data.pulseRate),
+        systolicBloodPressure: Number(data.systolicBloodPressure),
+        diastolicBloodPressure: Number(data.diastolicBloodPressure),
+        spo2: Number(data.spo2),
+        temperature: Number(data.temperature),
+      };
+      axios.post("/api/vitals", formattedData);
+      router.push(`/patients`);
+    } catch (error) {
+      setIsSubmitting(false);
+      setError(`An unexpected error occurred: ${error}`);
+    }
   };
 
   return (
     <div className="max-w-lg md:max-w-3xl mx-auto mt-10 px-10">
       {/* level of Consciousness */}
+      <Button>
+        <Link href="/patients">Back</Link>
+      </Button>
       <h1 className="text-2xl p-3">Vitals of Patient ID.{params.patientId}</h1>
       <Form {...Vitalform}>
         <form onSubmit={Vitalform.handleSubmit(onSubmit)} className="space-y-3">
@@ -143,6 +165,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
               />
             </div>
           </div>
+          <h1 className="font-light text-sm">Lung Related Info</h1>
           <div className="md:flex md:gap-2">
             <div className="md:flex-1">
               {/* Breathing Status */}
@@ -191,47 +214,54 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
             </div>
           </div>
 
-          {/* Pulse Quality */}
-          <FormField
-            control={Vitalform.control}
-            name="pulseRateQuality"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pulse Rate Quality</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  //   defaultValue={}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select the Breathing Status of the patient" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="REGULAR">REGULAR</SelectItem>
-                    <SelectItem value="IRREGULAR">IRREGULAR</SelectItem>
-                    <SelectItem value="ABSENT">ABSENT</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+          <h1 className="text-sm font-light">Heart related Info</h1>
+          <div className="md:flex md:gap-2">
+            <div className="md:flex-1">
+              {/* Pulse Quality */}
+              <FormField
+                control={Vitalform.control}
+                name="pulseRateQuality"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pulse Rate Quality</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      //   defaultValue={}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select the Breathing Status of the patient" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="REGULAR">REGULAR</SelectItem>
+                        <SelectItem value="IRREGULAR">IRREGULAR</SelectItem>
+                        <SelectItem value="ABSENT">ABSENT</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="md:flex-1">
+              {/* Pulse Rate */}
+              <FormField
+                control={Vitalform.control}
+                name="pulseRate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pulse Rate / Beats per Minute</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" type="number" {...field} />
+                    </FormControl>
 
-          {/* Pulse Rate */}
-          <FormField
-            control={Vitalform.control}
-            name="pulseRate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pulse Rate / Beats per Minute</FormLabel>
-                <FormControl>
-                  <Input placeholder="" {...field} />
-                </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           {/* Systolic Blood Pressure */}
           {/* Diastolic Blood Pressure */}
           <div>
@@ -271,40 +301,45 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
             </div>
           </div>
 
-          {/* SpO2 */}
-          <FormField
-            control={Vitalform.control}
-            name="spo2"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>SPO2</FormLabel>
-                <FormControl>
-                  <Input placeholder="" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Temperature */}
-          <FormField
-            control={Vitalform.control}
-            name="temperature"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Temperature</FormLabel>
-                <FormControl>
-                  <Input placeholder="" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="md:flex md:gap-2">
+            {/* SpO2 */}
+            <div className="md:flex-1">
+              <FormField
+                control={Vitalform.control}
+                name="spo2"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>SPO2</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="md:flex-1">
+              {/* Temperature */}
+              <FormField
+                control={Vitalform.control}
+                name="temperature"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Temperature</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <Button type="submit">Submit</Button>
         </form>
       </Form>
 
-      {/* SpO2 */}
-
-      {/* Temperature */}
       {/* Submit */}
     </div>
   );

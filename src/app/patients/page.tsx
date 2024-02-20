@@ -20,6 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PlusIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 const PatientsPage = async () => {
   const patients = await prisma.patient.findMany({
@@ -50,6 +51,15 @@ const PatientsPage = async () => {
                       <div>
                         <h2 className="text-blue-500">{patient.status}</h2>
                         <p>Joined At {patient.createdAt.toDateString()}</p>
+                        <div>
+                          <Button>
+                            <Link
+                              href={`/patients/${patient.id}/view-patient-details`}
+                            >
+                              View
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
                     }
                   </CardTitle>
@@ -57,11 +67,58 @@ const PatientsPage = async () => {
                 <CardContent>
                   <div className="flex flex-col">
                     <div>
-                      <div className="grid grid-cols-2 gap-2 mt-2 ">
-                        <Button className="md:w-32">Vitals</Button>
-                        <Button className="md:w-32">Comorbidities</Button>
-                        <Button className="md:w-32">Disablities</Button>
-                        <Button className="md:w-32">Previous History</Button>
+                      <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-0 mt-2 ">
+                        <div className=" p-2 rounded-md">
+                          <button className="text-black font-semibold">
+                            Vitals
+                          </button>
+                          <div className="sm:w-20 md:w-32 flex gap-2">
+                            <Link href={`/patients/${patient.id}/newvitals`}>
+                              <Button>
+                                <PlusIcon />
+                              </Button>
+                            </Link>
+                            <Link href={`/patients/${patient.id}/viewvitals`}>
+                              <Button>
+                                <EyeOpenIcon />
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                        <div className=" p-2 rounded-md">
+                          <button className="text-black font-semibold">
+                            Comorbidities
+                          </button>
+                          <div className="sm:w-20 md:w-32 flex gap-2">
+                            <Link href={`/patients/${patient.id}/newvitals`}>
+                              <Button>
+                                <PlusIcon />
+                              </Button>
+                            </Link>
+                            <Link href={`/patients/${patient.id}/newvitals`}>
+                              <Button>
+                                <EyeOpenIcon />
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                        <div className=" p-2 rounded-md">
+                          <button className="text-black font-semibold">
+                            Disabilities
+                          </button>
+                          <div className="sm:w-20 md:w-32 flex gap-2">
+                            <Link href={`/patients/${patient.id}/newvitals`}>
+                              <Button>
+                                <PlusIcon />
+                              </Button>
+                            </Link>
+                            <Link href={`/patients/${patient.id}/newvitals`}>
+                              <Button>
+                                <EyeOpenIcon />
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                       <div className="flex gap-2 flex-col mt-4">
                         <Button>
@@ -69,33 +126,30 @@ const PatientsPage = async () => {
                             Add New Comment
                           </Link>
                         </Button>
-                        <Dialog>
-                          <DialogTrigger>
-                            <div className="btn-primary">View</div>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>{`${patient.firstName} ${patient.lastName}`}</DialogTitle>
-                              <DialogDescription>
-                                Further Comments can be found here
-                              </DialogDescription>
-                              {patient.comments
-                                .slice(0, 2)
-                                .map((comment, index) => (
+                        {patient.comments.length <= 2 ? (
+                          <Dialog>
+                            <DialogTrigger>
+                              <div className="btn-primary">View</div>
+                            </DialogTrigger>
+                            <DialogContent className="text-left">
+                              <DialogHeader>
+                                <DialogTitle className="text-left">{`${patient.firstName} ${patient.lastName}`}</DialogTitle>
+                                <DialogDescription className="text-left">
+                                  Further Comments can be found here
+                                </DialogDescription>
+
+                                {patient.comments.map((comment, index) => (
                                   <div
                                     key={comment.id}
-                                    className="flex gap-1 flex-col justify-start"
+                                    className="flex gap-1 flex-col justify-start text-left"
                                   >
                                     <div>
                                       <h2 className="text-blue-800">
-                                      <p className="text-blue-700 text-sm font-extralight">
-                                        {comment.createdAt.toDateString()}
-                                      </p>
+                                        <p className="text-blue-700 text-sm font-extralight">
+                                          {comment.createdAt.toDateString()}
+                                        </p>
                                         {comment.doctorName}
                                       </h2>{" "}
-                                      <p className="text-blue-700 text-sm font-extralight">
-                                        {comment.createdAt.toTimeString()}
-                                      </p>
                                     </div>
                                     <div className="flex gap-2">
                                       <h2>{index + 1}.</h2>
@@ -103,16 +157,16 @@ const PatientsPage = async () => {
                                     </div>
                                   </div>
                                 ))}
-                              {patient.comments.length > 3 && (
-                                <Link
-                                  href={`/patients/${patient.id}/viewcomments`}
-                                >
-                                  <div className="text-blue-500">View More</div>
-                                </Link>
-                              )}
-                            </DialogHeader>
-                          </DialogContent>
-                        </Dialog>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog>
+                        ) : (
+                          <Button>
+                            <Link href={`/patients/${patient.id}/viewcomments`}>
+                              View More
+                            </Link>
+                          </Button>
+                        )}
                       </div>
                     </div>
                     <div className="mt-4"></div>

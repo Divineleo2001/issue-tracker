@@ -22,7 +22,11 @@ const ViewPatientIssue = async ({
 
   return (
     <div className="max-w-6xl  mx-auto p-10">
+      <Link href="/patients">
+        <Button>Back</Button>
+      </Link>
       <h1 className="text-3xl font-bold py-4">{patientName} Issues</h1>
+
       <ViewCommentTable comments={comments} />
 
       <Link href={`/patients/${params.patientId}/newcomment`}>
