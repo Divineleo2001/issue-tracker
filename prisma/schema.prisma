@@ -68,9 +68,10 @@ model Vitals {
   createdAt              DateTime             @default(now())
   LoC                    LevelOfConsciousness @default(VERBAL)
   airwayStatus           AirwayStatus         @default(OPEN)
+  breathingRate             Int                  @db.Int
   breathingStatus        BreathingStatus      @default(NORMAL)
-  pulse                  Int                  @db.Int
-  pulseQuality           PulseQuality         @default(REGULAR)
+  pulseRate                 Int                  @db.Int
+  pulseRateQuality           PulseQuality         @default(REGULAR)
   systolicBloodPressure  Int                  @db.Int
   diastolicBloodPressure Int                  @db.Int
   spo2                   Float                @db.Float

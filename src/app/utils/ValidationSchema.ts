@@ -1,5 +1,19 @@
 import { z } from "zod";
 
+export const createVitalSchema = z.object({
+  patientId: z.number(),
+  LoC: z.string(),
+  airwayStatus: z.string(),
+  breathingRate: z.number(),
+  breathingStatus: z.string(),
+  pulseRate: z.number(),
+  pulseRateQuality: z.string(),
+  systolicBloodPressure: z.number(),
+  diastolicBloodPressure: z.number(),
+  spo2: z.number(),
+  temperature: z.number(),
+});
+
 export const createCommentSchema = z.object({
   doctorName: z.string().min(2, "Doctor Name Is required"),
   patientId: z.number().min(1, "Patient ID Is required"),
