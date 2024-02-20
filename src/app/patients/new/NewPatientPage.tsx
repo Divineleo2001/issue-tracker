@@ -8,33 +8,27 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { createFormPatientSchema } from "@/app/utils/ValidationSchema";
+import {
+  createFormPatientSchema,
+  createPatientSchema,
+} from "@/app/utils/ValidationSchema";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import {
   Form,
   FormControl,
-
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
-import { PatientForm } from "./page";
 
-// interface PatientForm {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   age: number;
-//   mobileNumber: string;
-//   remarks: string;
-// }
+type PatientForm = z.infer<typeof createPatientSchema>;
 export const NewPatientPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -51,28 +45,12 @@ export const NewPatientPage = () => {
       remarks: "",
     },
   });
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-  });
-  const form1 = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  });
-  const {
-    register, handleSubmit, formState: { errors },
-  } = useForm<PatientForm>({
-    resolver: zodResolver(createFormPatientSchema),
-  });
 
-  const onSubmit = async (data: PatientForm) => {
+  const onSubmit = (data: PatientForm) => {
     console.log(data);
     try {
       setIsSubmitting(true);
-      await axios.post("/api/patients", data);
+      axios.post("/api/patients", data);
       router.push("/patients");
     } catch (error) {
       setIsSubmitting(false);
@@ -81,9 +59,6 @@ export const NewPatientPage = () => {
     console.log(error);
   };
 
-  const onSubmitForm = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-  };
   return (
     <div className="max-w-lg mx-auto mt-10 px-10 ">
       <Form {...form}>
@@ -99,7 +74,8 @@ export const NewPatientPage = () => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="lastName"
@@ -112,7 +88,8 @@ export const NewPatientPage = () => {
 
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
@@ -125,7 +102,8 @@ export const NewPatientPage = () => {
 
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="age"
@@ -137,7 +115,8 @@ export const NewPatientPage = () => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="mobileNumber"
@@ -149,14 +128,18 @@ export const NewPatientPage = () => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="gender"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Gender</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select gender" />
@@ -170,14 +153,18 @@ export const NewPatientPage = () => {
                 </Select>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="status"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Status</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select patient Status" />
@@ -196,7 +183,8 @@ export const NewPatientPage = () => {
                 </Select>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <FormField
             control={form.control}
             name="remarks"
@@ -208,7 +196,8 @@ export const NewPatientPage = () => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
-            )} />
+            )}
+          />
           <Button type="submit">Submit</Button>
         </form>
       </Form>

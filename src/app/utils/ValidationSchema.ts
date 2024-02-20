@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const createCommentSchema = z.object({
   doctorName: z.string().min(2, "Doctor Name Is required"),
-
   patientId: z.number().min(1, "Patient ID Is required"),
   comment: z
     .string()
