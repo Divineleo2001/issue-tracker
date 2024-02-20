@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const formSchema = z
   .object({
@@ -99,9 +100,12 @@ const Login = () => {
               );
             }}
           />
+          <Link href="/patients">
             <Button className="w-full">
               Submit
             </Button>
+
+          </Link>
         
         </form>
       </Form>
