@@ -18,7 +18,7 @@ const ViewPatientVital = async({params}: {params: {patientId: number}}) => {
 
     console.log(vitals)
     
-    const patientName = `${vitals[0].patient.firstName} ${vitals[0].patient.lastName}`;
+    const patientName = `${vitals[0]?.patient?.firstName} ${vitals[0]?.patient?.lastName}`;
     
     return (
         <div className="max-w-6xl  mx-auto p-10">
@@ -34,7 +34,7 @@ const ViewPatientVital = async({params}: {params: {patientId: number}}) => {
         
         <div className="md:grid md:grid-cols-2 md:gap-4">
             {vitals.map((vital) => (
-                <ViewVitalTable vitals={vital} />
+                <ViewVitalTable key={vital?.id} vitals={vital} />
             ))}
         </div>
     
