@@ -106,7 +106,7 @@ enum PulseQuality {
 
 model Comorbidities{
   id Int @id @default(autoincrement())
-  comorbityName String @db.VarChar(255)
+  cName String @db.VarChar(255)
   description String @db.Text
   createdAt DateTime @default(now())
 
