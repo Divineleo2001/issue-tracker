@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import { createComorbiditiesSchema } from "../utils/ValidationSchema";
-import { useRouter } from "next/router";
+import { z } from "zod";
+import { createDisabilitiesSchema } from "../utils/ValidationSchema";
+//import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { z } from "zod";
+//import axios from "axios";
 import {
   Form,
   FormControl,
@@ -18,28 +18,29 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-type ComorbidityForm = z.infer<typeof createComorbiditiesSchema>;
-export const Comorbiditypage = () => {
+type DisabilityForm = z.infer<typeof createDisabilitiesSchema>;
+const DisabilityPage = () => {
   //const router = useRouter();
   const [error, setError] = useState("");
-  const [IsSubmitting, setIsSubmitting] = useState(false);
+  const [submitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<ComorbidityForm>({
-    resolver: zodResolver(createComorbiditiesSchema),
+  const form = useForm<DisabilityForm>({
+    resolver: zodResolver(createDisabilitiesSchema),
     defaultValues: {
-      cName: "",
+      disabilityName: "",
       description: "",
     },
   });
-  const onSubmit = (data: ComorbidityForm) => {
+
+  const onSubmit = (data: DisabilityForm) => {
     console.log(data);
     // try {
     //   setIsSubmitting(true);
-    //   axios.post("/api/comorbidity", data);
-    //   router.push("/comorbidity");
+    //   axios.post("/api/disability", data);
+    //   router.push("/disability");
     // } catch {
     //   setIsSubmitting(false);
-    //   setError(`An unexpeceted error occurred:${error}`);
+    //   setError(`An unexpected error ${error}`);
     // }
     // console.log(error);
   };
@@ -47,15 +48,15 @@ export const Comorbiditypage = () => {
   return (
     <div className="">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="sapce-y-3">
           <FormField
             control={form.control}
-            name="cName"
+            name="disabilityName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>comorbidity name:</FormLabel>
+                <FormLabel>disability name:</FormLabel>
                 <FormControl>
-                  <Input placeholder="comorbidity name" {...field} />
+                  <Input placeholder="disability name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,4 +83,4 @@ export const Comorbiditypage = () => {
   );
 };
 
-export default Comorbiditypage;
+export default DisabilityPage;
