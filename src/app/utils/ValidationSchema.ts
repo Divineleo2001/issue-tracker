@@ -112,3 +112,16 @@ export const createPatientSchema = z.object({
   mobileNumber: z.string().min(10).max(20),
   remarks: z.string().min(1),
 });
+
+export const createComorbiditiesSchema = z.object({
+  cName:z.string().min(2).max(255),
+  description:z.string(),
+});
+
+export const createDisabilitiesSchema = z.object({
+  disabilityName:z.string().min(2).max(255),
+  description:z.string(),
+});
+
+
+

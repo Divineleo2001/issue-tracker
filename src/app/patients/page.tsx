@@ -24,7 +24,7 @@ import { PlusIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import PatientStatusBadge from "@/components/PatientStatusBadge";
 import { Badge } from "@/components/ui/badge";
 
-const users = require("@/data/data.json");
+
 
 const PatientsPage = async () => {
   const patients = await prisma.patient.findMany({
