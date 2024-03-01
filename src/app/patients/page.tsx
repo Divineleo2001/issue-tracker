@@ -23,19 +23,52 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import PatientStatusBadge from "@/components/PatientStatusBadge";
 import { Badge } from "@/components/ui/badge";
-
-
+import axios from "axios";
+import { cookies } from "next/headers";
 
 const PatientsPage = async () => {
+  //get patients from the server using the idtoken stored in the cookie
+  const authToken = cookies().get("accessToken")?.value;
+
+  const bearerToken = `Bearer ${authToken}`;
+
+  const patientsList = await axios.get("http://backend-server:8080/api/patients", {
+    headers: {
+      Authorization: bearerToken,
+    },
+  });
+
+  const patientsData = patientsList.data;
+  console.log(patientsList.data);
   const patients = await prisma.patient.findMany({
     include: {
       comments: true,
     },
   });
+  // console.log(patients)
 
   return (
     <div className="overflow-x-auto">
+
+      <div>
+        <h1 className="text-4xl font-semibold text-center">Patients</h1>
+        {
+          patientsData.map((patient, index) => (
+            <div key={patient.id}>
+              {index + 1}.
+              <div>
+               {`${patient.name} `}
+              </div>
+              <div>
+
+              </div>
+            </div>
+          ))
+        }
+      </div>
       <div className="max-w-7xl mx-auto">
+   
+
         <Link href="/patients/new">
           <div className="flex md:justify-end md:mr-10">
             <Button variant="default" className="ml-10 mt-10 shadow-md">
