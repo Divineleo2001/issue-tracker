@@ -1,44 +1,47 @@
-"use client"
+"use client";
 import * as z from "zod";
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import React from 'react'
-import { useForm } from 'react-hook-form';
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 
-const formSchema = z
-  .object({
-    emailAddress: z.string().email(),
-    password: z.string().min(3),
-    passwordConfirm: z.string(),
-  })
-  .refine(
-    (data) => {
-      return data.password === data.passwordConfirm;
-    },
-    {
-      message: "Passwords do not match",
-      path: ["passwordConfirm"],
-    }
-  );
+import { LoginUser } from "../actions/login";
+import { useRouter } from "next/navigation";
+
+
+
+const formSchema = z.object({
+  username: z.string(),
+  password: z.string().min(3),
+  rememberMe: z.boolean(),
+});
+
+export type formLogin = z.infer<typeof formSchema>;
 
 const Login = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          emailAddress: "",
-          password: "",
-          passwordConfirm: "",
-        },
-      });
-
-     // const accountType = form.watch("accountType");
-
-      const handleSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log({ values });
-      };
+  const router = useRouter()
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
+  const handleSubmit = async (values: formLogin) => {
+    await LoginUser(values);
+    router.push("/patients")
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Form {...form}>
@@ -48,24 +51,20 @@ const Login = () => {
         >
           <FormField
             control={form.control}
-            name="emailAddress"
+            name="username"
             render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="username"
-                      type="text"
-                      {...field}
-                    />
+                    <Input placeholder="username" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               );
             }}
           />
-          
+
           <FormField
             control={form.control}
             name="password"
@@ -83,34 +82,24 @@ const Login = () => {
           />
           <FormField
             control={form.control}
-            name="passwordConfirm"
+            name="rememberMe"
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Password confirm</FormLabel>
+                  <FormLabel>Remember me</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Password confirm"
-                      type="password"
-                      {...field}
-                    />
+                    <Input type="checkbox" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               );
             }}
           />
-          <Link href="/patients">
-            <Button className="w-full">
-              Submit
-            </Button>
-
-          </Link>
-        
+          <Button className="w-full">Submit</Button>
         </form>
       </Form>
     </main>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

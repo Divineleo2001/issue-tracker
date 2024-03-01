@@ -33,15 +33,7 @@ export const Comorbiditypage = () => {
   });
   const onSubmit = (data: ComorbidityForm) => {
     console.log(data);
-    // try {
-    //   setIsSubmitting(true);
-    //   axios.post("/api/comorbidity", data);
-    //   router.push("/comorbidity");
-    // } catch {
-    //   setIsSubmitting(false);
-    //   setError(`An unexpeceted error occurred:${error}`);
-    // }
-    // console.log(error);
+    
   };
 
   return (
