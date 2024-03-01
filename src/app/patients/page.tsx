@@ -25,6 +25,7 @@ import PatientStatusBadge from "@/components/PatientStatusBadge";
 import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 import { cookies } from "next/headers";
+import { PatientView } from "@/components/patient-view";
 
 const PatientsPage = async () => {
   //get patients from the server using the idtoken stored in the cookie
@@ -32,11 +33,14 @@ const PatientsPage = async () => {
 
   const bearerToken = `Bearer ${authToken}`;
 
-  const patientsList = await axios.get("http://backend-server:8080/api/patients", {
-    headers: {
-      Authorization: bearerToken,
-    },
-  });
+  const patientsList = await axios.get(
+    "http://backend-server:8080/api/patients",
+    {
+      headers: {
+        Authorization: bearerToken,
+      },
+    }
+  );
 
   const patientsData = patientsList.data;
   console.log(patientsList.data);
@@ -49,26 +53,20 @@ const PatientsPage = async () => {
 
   return (
     <div className="overflow-x-auto">
-
-      <div>
-        <h1 className="text-4xl font-semibold text-center">Patients</h1>
-        {
-          patientsData.map((patient, index) => (
-            <div key={patient.id}>
-              {index + 1}.
-              <div>
-               {`${patient.name} `}
-              </div>
-              <div>
-
-              </div>
-            </div>
-          ))
-        }
+      <h1 className="text-4xl font-semibold text-center">Patients</h1>
+      <div className="lg:hidden md:grid md:grid-cols-2 gap-4">
+        {patientsData.map((patient, index) => (
+          <div key={patient.id} >
+            <PatientView
+              name={patient.name}
+              age={patient.age}
+              gender={patient.gender}
+              regId={patient.id}
+            />
+          </div>
+        ))}
       </div>
       <div className="max-w-7xl mx-auto">
-   
-
         <Link href="/patients/new">
           <div className="flex md:justify-end md:mr-10">
             <Button variant="default" className="ml-10 mt-10 shadow-md">
