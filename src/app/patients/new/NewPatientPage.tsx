@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
   createFormPatientSchema,
-  createPatientSchema,
+
 } from "@/app/utils/ValidationSchema";
 import {
   Select,
@@ -27,79 +27,55 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { NewPatientData } from "@/app/actions/addPatient";
 
-type PatientForm = z.infer<typeof createPatientSchema>;
+export type PatientForm = z.infer<typeof createFormPatientSchema>;
+
 export const NewPatientPage = () => {
   const router = useRouter();
-  const [error, setError] = useState("");
-  const [IsSubmitting, setIsSubmitting] = useState(false);
+
 
   const form = useForm<PatientForm>({
     resolver: zodResolver(createFormPatientSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      age: 0,
-      mobileNumber: "",
-      remarks: "",
+      name : "",
+      regId : "0",
+      age : "0",
+      gender : "",
     },
   });
 
-  const onSubmit = (data: PatientForm) => {
-    console.log(data);
-    try {
-      setIsSubmitting(true);
-      axios.post("/api/patients", data);
-      router.push("/patients");
-    } catch (error) {
-      setIsSubmitting(false);
-      setError(`An unexpected error occurred: ${error}`);
-    }
-    console.log(error);
-  };
+  // const onSubmit = (data: PatientForm) => {
+  //   console.log(data);
+  //   try {
+  //     setIsSubmitting(true);
+  //     axios.post("/api/patients", data);
+  //     router.push("/patients");
+  //   } catch (error) {
+  //     setIsSubmitting(false);
+  //     setError(`An unexpected error occurred: ${error}`);
+  //   }
+  //   console.log(error);
+  // };
+
+  const handleSubmit = async (values: PatientForm) => {
+    await NewPatientData(values)
+    router.push("/patients");
+  }
 
   return (
     <div className="max-w-lg mx-auto mt-10 px-10 ">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
           <FormField
             control={form.control}
-            name="firstName"
+            name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>Please provide the patient Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="First Name" {...field} />
+                  <Input placeholder="Name" {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="LastName" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>E-mail </FormLabel>
-                <FormControl>
-                  <Input placeholder="E Mail" {...field} />
-                </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -111,21 +87,9 @@ export const NewPatientPage = () => {
               <FormItem>
                 <FormLabel>Age</FormLabel>
                 <FormControl>
-                  <Input placeholder="Age" {...field} />
+                  <Input placeholder="Age" type="number" {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="mobileNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mobile Number</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mobile Number" {...field} />
-                </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -135,69 +99,29 @@ export const NewPatientPage = () => {
             name="gender"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gender</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select gender" />
-                    </SelectTrigger>
-                  </FormControl>
-
-                  <SelectContent>
-                    <SelectItem value="Male">Male</SelectItem>
-                    <SelectItem value="Female">Female</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Status</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select patient Status" />
-                    </SelectTrigger>
-                  </FormControl>
-
-                  <SelectContent>
-                    <SelectItem value="JOINED">JOINED</SelectItem>
-                    <SelectItem value="CRITICAL">CRITICAL</SelectItem>
-                    <SelectItem value="NON_CRITICAL">NON_CRITICAL</SelectItem>
-                    <SelectItem value="TREATMENT_IN_PROGRESS">
-                      TREATMENT_IN_PROGRESS
-                    </SelectItem>
-                    <SelectItem value="CLOSED">CLOSED</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="remarks"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Remarks</FormLabel>
+                <FormLabel>Gender </FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Remarks" {...field} />
+                  <Input placeholder="Gender" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="regId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Unique Registration ID </FormLabel>
+                <FormControl>
+                  <Input placeholder="Registration ID" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+         
           <Button type="submit">Submit</Button>
         </form>
       </Form>

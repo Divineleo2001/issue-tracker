@@ -1,7 +1,8 @@
+import { create } from "domain";
 import { z } from "zod";
 
 export const createVitalsSchema = z.object({
-  patientId: z.number(),
+  id: z.number(),
   LoC: z.string(),
   airwayStatus: z.string(),
   breathingRate: z.number(),
@@ -15,12 +16,7 @@ export const createVitalsSchema = z.object({
 });
 
 export const createFormVitalsSchema = z.object({
-  patientId: z
-    .string()
-    .min(1, "Patient ID Is required")
-    .refine((value) => !isNaN(Number(value)), {
-      message: "Patient ID must be a number",
-    }),
+  id: z.number(),
   LoC: z.string(),
   airwayStatus: z.string(),
   breathingRate: z
@@ -87,31 +83,31 @@ export const createFormCommentSchema = z.object({
 });
 
 export const createFormPatientSchema = z.object({
-  firstName: z.string().min(2).max(255),
-  lastName: z.string().min(2).max(255),
-  email: z.string().email(),
-  status: z.string(),
+  name: z.string().nullable(),
+  regId: z.string().refine((value) => !isNaN(Number(value)), {
+    message: "Registration ID must be a number",
+  }),
+  age: z.string().refine((value) => !isNaN(Number(value)), {
+    message: "Age must be a number",
+  }),
   gender: z.string(),
-  age: z
-    .string()
-    .transform((val) => parseInt(val))
-    .refine((value) => !isNaN(value), {
-      message: "Age must be a number",
-    }),
-  mobileNumber: z.string().min(10, "The number must be of 10 digits").max(20),
-  remarks: z.string().min(1),
 });
 
-export const createPatientSchema = z.object({
-  firstName: z.string().min(2).max(255),
-  lastName: z.string().min(2).max(255),
-  email: z.string().email(),
-  status: z.string(),
-  age: z.number().min(1).max(150),
+export const patientDataSchema = z.object({
+  id: z.number(),
+  regId: z.string(),
+  name: z.string(),
   gender: z.string(),
-  mobileNumber: z.string().min(10).max(20),
-  remarks: z.string().min(1),
-});
+  age: z.number(),
+  createdBy : z.string(),
+  createdDate : z.date(),
+  login : z.string(),
+  lastModifiedBy : z.string(),
+  lastModifiedDate : z.date(),
+
+})
+
+
 
 export const createComorbiditiesSchema = z.object({
   cName:z.string().min(2).max(255),

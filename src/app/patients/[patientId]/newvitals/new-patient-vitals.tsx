@@ -26,20 +26,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import axios from "axios";
-import Link from "next/link";
+
 
 type VitalsForm = z.infer<typeof createVitalsSchema>;
 
-const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
+const NewPatientVitals = ({ id }: { id: number }) => {
   const router = useRouter();
-  const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const Vitalform = useForm<VitalsForm>({
     resolver: zodResolver(createFormVitalsSchema),
     defaultValues: {
-      patientId: params.patientId,
+      id: id,
       LoC: "OPEN",
       airwayStatus: "OPEN",
       breathingRate: 0,
@@ -55,10 +52,9 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
 
   const onSubmit = (data: VitalsForm) => {
     try {
-      setIsSubmitting(true);
       const formattedData: VitalsForm = {
         ...data,
-        patientId: Number(data.patientId),
+        id: Number(data.id),
         breathingRate: Number(data.breathingRate),
         pulseRate: Number(data.pulseRate),
         systolicBloodPressure: Number(data.systolicBloodPressure),
@@ -66,36 +62,29 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
         spo2: Number(data.spo2),
         temperature: Number(data.temperature),
       };
-      axios.post("/api/vitals", formattedData);
-      router.push(`/patients`);
+      console.log(formattedData);
     } catch (error) {
-      setIsSubmitting(false);
-      setError(`An unexpected error occurred: ${error}`);
+      console.error(error);
     }
   };
 
   return (
-    <div className="max-w-lg md:max-w-3xl mx-auto mt-10 px-10">
+    <div className=" mx-auto space-y-3">
       {/* level of Consciousness */}
-      <Button>
-        <Link href="/patients">Back</Link>
-      </Button>
-      <h1 className="text-2xl p-3">Vitals of Patient ID.{params.patientId}</h1>
       <Form {...Vitalform}>
-        <form onSubmit={Vitalform.handleSubmit(onSubmit)} className="space-y-3">
+        <form
+          onSubmit={Vitalform.handleSubmit(onSubmit)}
+          className="md:space-y-3"
+        >
           <div className="hidden">
             <FormField
               control={Vitalform.control}
-              name="patientId"
+              name="id"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Patient ID</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder={params.patientId.toString()}
-                      readOnly
-                      {...field}
-                    />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,7 +93,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
           </div>
 
           <div className="md:flex md:gap-2">
-            <div className="md:flex-1">
+            <div className="md:flex-1 ">
               <FormField
                 control={Vitalform.control}
                 name="LoC"
@@ -117,7 +106,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the consciousness level" />
+                          <SelectValue placeholder="Select " />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -147,7 +136,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Airway status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -181,7 +170,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Breathing Status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -230,7 +219,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Breathing Status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -335,8 +324,10 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
               />
             </div>
           </div>
-
-          <Button type="submit">Submit</Button>
+          <div className="mt-4">
+            <Button type="submit">Submit</Button>
+          </div>
+          
         </form>
       </Form>
 

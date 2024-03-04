@@ -3,14 +3,13 @@ import axios from "axios";
 import { formLogin } from "../login/Login";
 import { cookieLogin } from "./cookieLogin";
 import { cookies } from "next/headers";
-import { redirect } from 'next/navigation'
-
 
 
 export const LoginUser = async (values: formLogin) => {
+  const authenticateUrl = process.env.BACKEND_URL + "/api/authenticate";
 
   try {
-    const response = await axios.post("http://backend-server:8080/api/authenticate", {
+    const response = await axios.post(authenticateUrl, {
       username: values.username,
       password: values.password,
       rememberMe: values.rememberMe,
