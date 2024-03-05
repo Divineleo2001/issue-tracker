@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-type ComorbidityForm = z.infer<typeof createComorbiditiesSchema>;
+export type ComorbidityForm = z.infer<typeof createComorbiditiesSchema>;
 export const Comorbiditypage = () => {
   //const router = useRouter();
   const [error, setError] = useState("");

@@ -26,12 +26,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { VitalsData } from "@/app/actions/vitals";
 
 
-type VitalsForm = z.infer<typeof createVitalsSchema>;
+export type VitalsForm = z.infer<typeof createVitalsSchema>;
 
 const NewPatientVitals = ({ id }: { id: number }) => {
-  const router = useRouter();
+
 
   const Vitalform = useForm<VitalsForm>({
     resolver: zodResolver(createFormVitalsSchema),
@@ -50,7 +51,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
     },
   });
 
-  const onSubmit = (data: VitalsForm) => {
+  const handleSubmit = async (data: VitalsForm) => {
     try {
       const formattedData: VitalsForm = {
         ...data,
@@ -62,7 +63,9 @@ const NewPatientVitals = ({ id }: { id: number }) => {
         spo2: Number(data.spo2),
         temperature: Number(data.temperature),
       };
-      console.log(formattedData);
+      // await VitalsData(formattedData)
+      console.log(data)
+      console.log(formattedData)
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +76,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
       {/* level of Consciousness */}
       <Form {...Vitalform}>
         <form
-          onSubmit={Vitalform.handleSubmit(onSubmit)}
+          onSubmit={Vitalform.handleSubmit(handleSubmit)}
           className="md:space-y-3"
         >
           <div className="hidden">

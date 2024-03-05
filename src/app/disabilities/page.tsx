@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-type DisabilityForm = z.infer<typeof createDisabilitiesSchema>;
+export type DisabilityForm = z.infer<typeof createDisabilitiesSchema>;
 const DisabilityPage = () => {
   //const router = useRouter();
   const [error, setError] = useState("");
