@@ -26,21 +26,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import axios from "axios";
-import Link from "next/link";
+import { VitalsData } from "@/app/actions/vitals";
+import { DialogClose } from "@/components/ui/dialog";
 
-type VitalsForm = z.infer<typeof createVitalsSchema>;
+export type VitalsForm = z.infer<typeof createVitalsSchema>;
 
-const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
-  const router = useRouter();
-  const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+const NewPatientVitals = ({ id }: { id: number }) => {
   const Vitalform = useForm<VitalsForm>({
     resolver: zodResolver(createFormVitalsSchema),
     defaultValues: {
-      patientId: params.patientId,
-      LoC: "OPEN",
+      patientId: id,
+      loc: "OPEN",
       airwayStatus: "OPEN",
       breathingRate: 0,
       breathingStatus: "NORMAL",
@@ -53,9 +49,8 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
     },
   });
 
-  const onSubmit = (data: VitalsForm) => {
+  const handleSubmit = async (data: VitalsForm) => {
     try {
-      setIsSubmitting(true);
       const formattedData: VitalsForm = {
         ...data,
         patientId: Number(data.patientId),
@@ -66,24 +61,25 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
         spo2: Number(data.spo2),
         temperature: Number(data.temperature),
       };
-      axios.post("/api/vitals", formattedData);
-      router.push(`/patients`);
+      await VitalsData(formattedData);
+      // console.log(data)
+      if (Vitalform.formState.isSubmitted) {
+        Vitalform.reset();
+      }
     } catch (error) {
-      setIsSubmitting(false);
-      setError(`An unexpected error occurred: ${error}`);
+      console.error(error);
     }
   };
 
   return (
-    <div className="max-w-lg md:max-w-3xl mx-auto mt-10 px-10">
+    <div className=" mx-auto ">
       {/* level of Consciousness */}
-      <Button>
-        <Link href="/patients">Back</Link>
-      </Button>
-      <h1 className="text-2xl p-3">Vitals of Patient ID.{params.patientId}</h1>
       <Form {...Vitalform}>
-        <form onSubmit={Vitalform.handleSubmit(onSubmit)} className="space-y-3">
-          <div className="hidden">
+        <form
+          onSubmit={Vitalform.handleSubmit(handleSubmit)}
+          className="md:space-y-3"
+        >
+          <div className="">
             <FormField
               control={Vitalform.control}
               name="patientId"
@@ -91,11 +87,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                 <FormItem>
                   <FormLabel>Patient ID</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder={params.patientId.toString()}
-                      readOnly
-                      {...field}
-                    />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,10 +96,10 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
           </div>
 
           <div className="md:flex md:gap-2">
-            <div className="md:flex-1">
+            <div className="md:flex-1 ">
               <FormField
                 control={Vitalform.control}
-                name="LoC"
+                name="loc"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Level Of Consciousness</FormLabel>
@@ -117,7 +109,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the consciousness level" />
+                          <SelectValue placeholder="Select " />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -147,7 +139,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Airway status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -181,7 +173,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Breathing Status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -230,7 +222,7 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select the Breathing Status of the patient" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -335,8 +327,22 @@ const NewPatientVitals = ({ params }: { params: { patientId: number } }) => {
               />
             </div>
           </div>
-
-          <Button type="submit">Submit</Button>
+          <div className="mt-4">
+            {!Vitalform.formState.isValid ? (
+              <Button type="submit" className="w-full">
+                {" "}
+                Save changes{" "}
+              </Button>
+            ) : (
+              <DialogClose asChild>
+                <Button type="submit" className="w-full">
+                  {" "}
+                  Save changes{" "}
+                </Button>{" "}
+              </DialogClose>
+            )}
+            {/* <Button type="submit">Submit</Button> */}
+          </div>
         </form>
       </Form>
 

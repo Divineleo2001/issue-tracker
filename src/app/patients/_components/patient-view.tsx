@@ -13,22 +13,25 @@ import {
 } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { MdCameraFront } from "react-icons/md";
+import AddDialogVitals from "./add-dialog-vitals";
 
 export function PatientView({
   name,
   age,
   gender,
   regId,
+  id
 }: {
   name: string;
   age: number;
   gender: string;
-  regId: number;
+  regId: string;
+  id: number;
 }) {
   const patientName = name ? name : "No Name";
 
   return (
-    <Card key={regId} className="w-[400px] mx-auto relative mt-10">
+    <Card key={regId} className="mx-auto relative mt-10">
       <div className="absolute top-0 left-0 p-2">
         <Button variant="outline">
           <Link href={`/patients/${regId}/view-patient-details`}>View</Link>
@@ -61,22 +64,22 @@ export function PatientView({
         </div>
         <div className="flex flex-col gap-2">
           <div className="grid grid-cols-2 gap-2">
-            <Button>
+              <AddDialogVitals id={id}/>
+            {/* <Button>
               <Link href={`/patients/${regId}/newvitals`}>Add Vitals</Link>
-            </Button>
+            </Button> */}
 
-            <Button>Add Comorbidities</Button>
-            <Button>Add Disabilities</Button>
-            <Button>Add Comments</Button>
-            <Button>Add History</Button>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
             <Button>View Vitals</Button>
+            <Button>Add Comorbidities</Button>
             <Button>View Comorbidities</Button>
+            <Button>Add Disabilities</Button>
             <Button>View Disabilities</Button>
+            <Button>Add Comments</Button>
             <Button>View Comments</Button>
+            <Button>Add History</Button>
             <Button>View History</Button>
           </div>
+        
         </div>
       </CardContent>
       <div className="absolute top-0 right-0 flex flex-col gap-4 p-2">

@@ -4,6 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import TanstackProvider from "./providers/providers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,11 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fontSans.variable} >
-      <body className={cn("min-h-screen bg-background font-sans antialiased overflow-x-auto")}>
+    <html lang="en" className={fontSans.variable}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased overflow-x-auto"
+        )}
+      >
         <Navbar />
-
-        {children}
+        <TanstackProvider >
+          {children}
+        </TanstackProvider>
+        
       </body>
     </html>
   );
