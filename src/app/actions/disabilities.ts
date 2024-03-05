@@ -1,16 +1,16 @@
 "use server";
-import axios from "axios";
 import { cookies } from "next/headers";
-import { ComorbidityForm } from "../comorbidities/page";
+import { DisabilityForm } from "../disabilities/page";
+import axios from "axios";
 
-export const ComorbidityData = async (values: ComorbidityForm) => {
-  const comorbidityUrl = process.env.BACKEND_URL + "api/comorbidities";
+export const DisabilitData = async (values: DisabilityForm) => {
+  const disabilityUrl = process.env.BACKEND_URL + "api/disabilities";
   const authToken = cookies().get("accesToken")?.value;
-  const bearerToken = `Bearer${authToken}`;
+  const bearerToken = `Bearer ${authToken}`;
 
   try {
     const response = await axios.post(
-      comorbidityUrl,
+      disabilityUrl,
       {
         name: values.name,
         description: values.description,
@@ -22,9 +22,9 @@ export const ComorbidityData = async (values: ComorbidityForm) => {
       }
     );
     if (response.status === 200) {
-      return console.log("Comorbidity added successfully");
+      console.log("Disability added successfully");
     }
   } catch (error) {
-    console.error("An error has occured:", error);
+    console.error("An error has occured", error);
   }
 };

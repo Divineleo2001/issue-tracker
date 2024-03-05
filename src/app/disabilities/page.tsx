@@ -27,7 +27,7 @@ const DisabilityPage = () => {
   const form = useForm<DisabilityForm>({
     resolver: zodResolver(createDisabilitiesSchema),
     defaultValues: {
-      disabilityName: "",
+      name: "",
       description: "",
     },
   });
@@ -51,7 +51,7 @@ const DisabilityPage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="sapce-y-3">
           <FormField
             control={form.control}
-            name="disabilityName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>disability name:</FormLabel>
