@@ -27,7 +27,7 @@ export const Comorbiditypage = () => {
   const form = useForm<ComorbidityForm>({
     resolver: zodResolver(createComorbiditiesSchema),
     defaultValues: {
-      cName: "",
+      name: "",
       description: "",
     },
   });
@@ -42,7 +42,7 @@ export const Comorbiditypage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
-            name="cName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>comorbidity name:</FormLabel>

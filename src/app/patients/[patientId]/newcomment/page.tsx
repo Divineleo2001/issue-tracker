@@ -23,8 +23,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/Spinner";
 
+export type CommentForm = z.infer<typeof createCommentSchema>;
+
 const NewPatientIssue = ({ params }: { params: { patientId: number } }) => {
-  type CommentForm = z.infer<typeof createCommentSchema>;
   const router = useRouter();
   const {
     register,
