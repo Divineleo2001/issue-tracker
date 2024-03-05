@@ -2,8 +2,8 @@ import { create } from "domain";
 import { z } from "zod";
 
 export const createVitalsSchema = z.object({
-  id: z.number(),
-  LoC: z.string(),
+  patientId: z.number(),
+  loc: z.string(),
   airwayStatus: z.string(),
   breathingRate: z.number(),
   breathingStatus: z.string(),
@@ -13,11 +13,12 @@ export const createVitalsSchema = z.object({
   diastolicBloodPressure: z.number(),
   spo2: z.number(),
   temperature: z.number(),
+
 });
 
 export const createFormVitalsSchema = z.object({
-  id: z.number(),
-  LoC: z.string(),
+  patientId: z.number(),
+  loc: z.string(),
   airwayStatus: z.string(),
   breathingRate: z
     .string()

@@ -27,18 +27,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { VitalsData } from "@/app/actions/vitals";
-
+import { DialogClose } from "@/components/ui/dialog";
 
 export type VitalsForm = z.infer<typeof createVitalsSchema>;
 
 const NewPatientVitals = ({ id }: { id: number }) => {
-
-
   const Vitalform = useForm<VitalsForm>({
     resolver: zodResolver(createFormVitalsSchema),
     defaultValues: {
-      id: id,
-      LoC: "OPEN",
+      patientId: id,
+      loc: "OPEN",
       airwayStatus: "OPEN",
       breathingRate: 0,
       breathingStatus: "NORMAL",
@@ -55,7 +53,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
     try {
       const formattedData: VitalsForm = {
         ...data,
-        id: Number(data.id),
+        patientId: Number(data.patientId),
         breathingRate: Number(data.breathingRate),
         pulseRate: Number(data.pulseRate),
         systolicBloodPressure: Number(data.systolicBloodPressure),
@@ -63,26 +61,28 @@ const NewPatientVitals = ({ id }: { id: number }) => {
         spo2: Number(data.spo2),
         temperature: Number(data.temperature),
       };
-      // await VitalsData(formattedData)
-      console.log(data)
-      console.log(formattedData)
+      await VitalsData(formattedData);
+      // console.log(data)
+      if (Vitalform.formState.isSubmitted) {
+        Vitalform.reset();
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className=" mx-auto space-y-3">
+    <div className=" mx-auto ">
       {/* level of Consciousness */}
       <Form {...Vitalform}>
         <form
           onSubmit={Vitalform.handleSubmit(handleSubmit)}
           className="md:space-y-3"
         >
-          <div className="hidden">
+          <div className="">
             <FormField
               control={Vitalform.control}
-              name="id"
+              name="patientId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Patient ID</FormLabel>
@@ -99,7 +99,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
             <div className="md:flex-1 ">
               <FormField
                 control={Vitalform.control}
-                name="LoC"
+                name="loc"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Level Of Consciousness</FormLabel>
@@ -328,9 +328,21 @@ const NewPatientVitals = ({ id }: { id: number }) => {
             </div>
           </div>
           <div className="mt-4">
-            <Button type="submit">Submit</Button>
+            {!Vitalform.formState.isValid ? (
+              <Button type="submit" className="w-full">
+                {" "}
+                Save changes{" "}
+              </Button>
+            ) : (
+              <DialogClose asChild>
+                <Button type="submit" className="w-full">
+                  {" "}
+                  Save changes{" "}
+                </Button>{" "}
+              </DialogClose>
+            )}
+            {/* <Button type="submit">Submit</Button> */}
           </div>
-          
         </form>
       </Form>
 

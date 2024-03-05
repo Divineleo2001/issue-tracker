@@ -12,8 +12,8 @@ export const VitalsData = async (values: VitalsForm) => {
     const response = await axios.post(
       vitalsUrl,
       {
-        id: values.id,
-        LoC: values.LoC,
+        loc: values.loc,
+        patientId: values.patientId,
         airwayStatus: values.airwayStatus,
         breathingRate: values.breathingRate,
         breathingStatus: values.breathingStatus,
@@ -30,7 +30,7 @@ export const VitalsData = async (values: VitalsForm) => {
         },
       }
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       return console.log("Vitals added successfully");
     }
   } catch (error) {

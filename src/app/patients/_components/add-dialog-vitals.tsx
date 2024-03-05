@@ -36,12 +36,13 @@ const AddDialogVitals = ({ id }: { id: number }) => {
           <DialogTrigger asChild>
             <Button variant="outline">Add Vitals</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] sm:max-h-[800px]">
+          <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
             <DialogHeader>
               <DialogTitle>Add Vitals</DialogTitle>
               <DialogDescription>Vitals of Patient ID.{id}</DialogDescription>
             </DialogHeader>
-            <NewPatientVitals id={id} />
+            <NewPatientVitals id={id}  />
+            
           </DialogContent>
         </Dialog>
       </>
@@ -49,7 +50,7 @@ const AddDialogVitals = ({ id }: { id: number }) => {
   }
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer open={open} onOpenChange={setOpen} >
         <DrawerTrigger asChild>
           <Button variant="outline">Add Vitals</Button>
         </DrawerTrigger>
