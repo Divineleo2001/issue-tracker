@@ -1,8 +1,6 @@
 "use client";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,7 +22,7 @@ import {
 } from "@/components/ui/drawer";
 
 import useMediaQuery from "@/hooks/use-media-query";
-import NewPatientVitals from "../[patientId]/newvitals/new-patient-vitals";
+import NewPatientVitals from "../[patientId]/(new)/newvitals/new-patient-vitals";
 
 const AddDialogVitals = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);
