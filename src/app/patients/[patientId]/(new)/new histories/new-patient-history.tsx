@@ -46,6 +46,7 @@ export const HistoryPage = ({id}:{id:number}) => {
                 </FormItem>
             )}
             />
+            <Button type="submit">Submit</Button>
         </form>
       </Form>
     </div>
