@@ -57,9 +57,9 @@ const NewPatientIssue = ({ params }: { params: { patientId: number } }) => {
           <h1 className="font-semibold text-xl text-blue-500">
             Add a new Issue for the patient No. {params.patientId}
           </h1>
-          <ErrorComponent alertTitle="Name" message={errors.doctorName?.message} />
+          <ErrorComponent alertTitle="Name" message={errors.comment?.message} />
 
-          <Input placeholder="Name of the Doctor" {...register("doctorName")}/>
+          <Input placeholder="Name of the Doctor" {...register("comment")}/>
 
           <ErrorComponent alertTitle="Issue" message={errors.comment?.message} />
           <Textarea
