@@ -119,5 +119,7 @@ export const createDisabilitiesSchema = z.object({
   description:z.string(),
 });
 
-
-
+export const createHistorySchema = z.object({
+  history: z.string(),
+  patientId: z.number(),
+});
