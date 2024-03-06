@@ -1,29 +1,33 @@
-import { CodeSandboxLogoIcon } from "@radix-ui/react-icons";
+"use server";
 import axios from "axios";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
+import { createHistorySchema } from "../utils/ValidationSchema";
+import { z } from "zod";
 
-export const HistoryData= async (values:)=>
-{
-    const historyUrl=process.env.BACKEND_URL+"api/histories";
-    const authToken=cookies().get("accessToken")?.value;
-    const bearerToken=`Bearer ${authToken}`;
+export type HistoryForm = z.infer<typeof createHistorySchema>;
 
-    try{
-        const response=await axios.post(
-            historyUrl,
-            {
+export const HistoryData = async (values: HistoryForm) => {
+  const historyUrl = process.env.BACKEND_URL + "api/histories";
+  const authToken = cookies().get("accessToken")?.value;
+  const bearerToken = `Bearer ${authToken}`;
 
-            },
-            {
-                headers:{
-                    Authorization:bearerToken,
-                }
-            }
-        );
-        if(response.status===200){
-            console.log("history added");
-        }
-    }catch(error){
-        console.error(error);
+  try {
+    const response = await axios.post(
+      historyUrl,
+      {
+        history: values.history,
+        patientId: values.patientId,
+      },
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      console.log("history added");
     }
-}
+  } catch (error) {
+    console.error(error);
+  }
+};

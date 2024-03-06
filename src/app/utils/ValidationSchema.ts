@@ -118,10 +118,5 @@ export const createDisabilitiesSchema = z.object({
 
 export const createHistorySchema = z.object({
   history: z.string(),
-  patientId: z
-    .string()
-    .min(1, "Patient ID Is required")
-    .refine((value) => !isNaN(Number(value)), {
-      message: "Patient ID must be a number",
-    }),
+  patientId: z.number(),
 });
