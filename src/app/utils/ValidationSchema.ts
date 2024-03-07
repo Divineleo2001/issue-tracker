@@ -84,7 +84,7 @@ export const createFormCommentSchema = z.object({
 });
 
 export const createFormPatientSchema = z.object({
-  name: z.string().nullable(),
+  name: z.string(),
   regId: z.string().refine((value) => !isNaN(Number(value)), {
     message: "Registration ID must be a number",
   }),

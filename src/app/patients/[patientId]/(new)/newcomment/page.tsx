@@ -16,7 +16,6 @@ import {
 import { z } from "zod";
 // import ErrorComponent from "@/components/Errors/ErrorComponent";
 // import Spinner from "@/components/Spinner";
-import prisma from "@/../prisma/client";
 import ErrorComponent from "@/components/Errors/ErrorComponent";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
