@@ -26,7 +26,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { VitalsData } from "@/app/actions/vitals";
+import { VitalsData } from "@/app/actions/addVitals";
 import { DialogClose } from "@/components/ui/dialog";
 
 export type VitalsForm = z.infer<typeof createVitalsSchema>;

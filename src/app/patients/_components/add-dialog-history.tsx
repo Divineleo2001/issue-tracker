@@ -20,7 +20,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import { HistoryPage } from "../[patientId]/(new)/new histories/new-patient-history";
+import { HistoryPage } from "../[patientId]/(new)/newhistories/new-patient-history";
 
 const AddDialogHistory = ({id}:{id:number}) => {
     const [open, setOpen] = React.useState(false);
@@ -48,11 +48,11 @@ const AddDialogHistory = ({id}:{id:number}) => {
       <>
         <Drawer open={open} onOpenChange={setOpen} >
           <DrawerTrigger asChild>
-            <Button variant="outline">Add Vitals</Button>
+            <Button variant="outline">Add History</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>Edit profile</DrawerTitle>
+              <DrawerTitle>History:</DrawerTitle>
               <DrawerDescription>
               History of Patient ID.{id}
               </DrawerDescription>

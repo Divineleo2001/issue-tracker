@@ -26,7 +26,7 @@ export const HistoryPage = ({id}:{id:number}) => {
             name="history"
             render={({field})=>(
                 <FormItem>
-                    <FormLabel> History </FormLabel>
+                    <FormLabel> History:</FormLabel>
                         <FormControl>
                             <Textarea placeholder="history"{...field}/>
                         </FormControl>
