@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 const formSchema = z.object({
   username: z.string(),
   password: z.string().min(3),
-  rememberMe: z.boolean(),
+  
 });
 
 export type formLogin = z.infer<typeof formSchema>;
@@ -35,7 +35,7 @@ const Login = () => {
     defaultValues: {
       username: "",
       password: "",
-      rememberMe: false,
+     
     },
   });
   const handleSubmit = async (values: formLogin) => {
@@ -46,6 +46,7 @@ const Login = () => {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Form {...form}>
         <form
+        
           onSubmit={form.handleSubmit(handleSubmit)}
           className="max-w-md w-full flex flex-col gap-4"
         >
@@ -80,7 +81,7 @@ const Login = () => {
               );
             }}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="rememberMe"
             render={({ field }) => {
@@ -88,13 +89,13 @@ const Login = () => {
                 <FormItem>
                   <FormLabel>Remember me</FormLabel>
                   <FormControl>
-                    <Input type="checkbox" {...field} />
+                    <input type="checkbox" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               );
             }}
-          />
+          /> */}
           <Button className="w-full">Submit</Button>
         </form>
       </Form>
