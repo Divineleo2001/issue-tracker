@@ -24,6 +24,7 @@ import { NewPatientIssue } from "../[patientId]/(new)/newcomment/new-patient-com
 
 export const AddDialogComments = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);
+  const [snap, setSnap] = React.useState<number | string | null>("410px");
   const isDesktop = useMediaQuery("(min-width:768px)");
   if (isDesktop) {
     return (
@@ -45,7 +46,10 @@ export const AddDialogComments = ({ id }: { id: number }) => {
   }
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer open={open} onOpenChange={setOpen}
+      snapPoints={["410px","500px",1]}
+      activeSnapPoint={snap}
+      setActiveSnapPoint={setSnap}>
         <DrawerTrigger asChild>
           <Button variant="outline">Add Comments</Button>
         </DrawerTrigger>
@@ -55,13 +59,13 @@ export const AddDialogComments = ({ id }: { id: number }) => {
             <DrawerDescription>Comments on Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
           <div className="overflow-x-scroll pr-20 pl-10">
-            <NewPatientIssue id={ id } />
+            <NewPatientIssue id={id} />
           </div>
-          <DrawerFooter className="pt-1 px-10">
-            <DrawerClose asChild>
+          <DrawerClose asChild>
+            <div className="pt-1 px-10">
               <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
+            </div>
+          </DrawerClose>
         </DrawerContent>
       </Drawer>
     </>

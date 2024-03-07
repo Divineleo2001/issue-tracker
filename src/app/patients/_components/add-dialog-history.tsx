@@ -22,56 +22,58 @@ import {
 import useMediaQuery from "@/hooks/use-media-query";
 import { HistoryPage } from "../[patientId]/(new)/newhistories/new-patient-history";
 
-const AddDialogHistory = ({id}:{id:number}) => {
-    const [open, setOpen] = React.useState(false);
-    const isDesktop = useMediaQuery("(min-width: 768px)");
-    if (isDesktop) {
-      return (
-        <>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline">Add History</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
-              <DialogHeader>
-                <DialogTitle>Add History</DialogTitle>
-                <DialogDescription>History of Patient ID.{id}</DialogDescription>
-              </DialogHeader>
-              <HistoryPage id={id}  />
-              
-            </DialogContent>
-          </Dialog>
-        </>
-      );
-    }
+const AddDialogHistory = ({ id }: { id: number }) => {
+  const [open, setOpen] = React.useState(false);
+  const [snap, setSnap] = React.useState<number | string | null>("410px");
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) {
     return (
       <>
-        <Drawer open={open} onOpenChange={setOpen} >
-          <DrawerTrigger asChild>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
             <Button variant="outline">Add History</Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader className="text-left">
-              <DrawerTitle>History:</DrawerTitle>
-              <DrawerDescription>
-              History of Patient ID.{id}
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="overflow-x-scroll pr-20 pl-10">
-            
-                <HistoryPage id={id} />
-              
-            </div>
-  
-            <DrawerFooter className="pt-1 px-10">
-              <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
+            <DialogHeader>
+              <DialogTitle>Add History</DialogTitle>
+              <DialogDescription>History of Patient ID.{id}</DialogDescription>
+            </DialogHeader>
+            <HistoryPage id={id} />
+          </DialogContent>
+        </Dialog>
       </>
     );
-}
+  }
+  return (
+    <>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        snapPoints={["410px","500px",1]}
+        activeSnapPoint={snap}
+        setActiveSnapPoint={setSnap}
+      >
+        <DrawerTrigger asChild>
+          <Button variant="outline">Add History</Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="text-left">
+            <DrawerTitle>History:</DrawerTitle>
+            <DrawerDescription>History of Patient ID.{id}</DrawerDescription>
+          </DrawerHeader>
+          <div className="overflow-x-scroll pr-20 pl-10">
+            <HistoryPage id={id} />
+          </div>
 
-export default AddDialogHistory
+          <DrawerClose asChild>
+            <div className="pt-2 px-10">
+              <Button variant="outline">Cancel</Button>
+            </div>
+          </DrawerClose>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+};
+
+export default AddDialogHistory;

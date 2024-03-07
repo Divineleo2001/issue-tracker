@@ -69,7 +69,7 @@ export const NewPatientIssue = ({ id }: { id:number }) => {
             placeholder="Patient ID"
           />
 
-          <Button className="w-40" type="submit">
+          <Button type="submit">
             Submit
             {isSubmitting && <Spinner />}
           </Button>

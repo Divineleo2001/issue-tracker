@@ -24,6 +24,7 @@ import Comorbiditypage from "../[patientId]/(new)/newcommorbidities/new-patient-
 
 export const AddDialogComorbidities = () => {
   const [open, setOpen] = React.useState(false);
+  const [snap, setSnap] = React.useState<number | string | null>("410px");
   const isDesktop = useMediaQuery("(min-width:768px)");
   if (isDesktop) {
     return (
@@ -37,7 +38,7 @@ export const AddDialogComorbidities = () => {
               <DialogTitle>Add Comorbidities</DialogTitle>
               <DialogDescription>Comorbidities:</DialogDescription>
             </DialogHeader>
-            <Comorbiditypage/>
+            <Comorbiditypage />
           </DialogContent>
         </Dialog>
       </>
@@ -45,7 +46,13 @@ export const AddDialogComorbidities = () => {
   }
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        snapPoints={["410px", "500px",1]}
+        activeSnapPoint={snap}
+        setActiveSnapPoint={setSnap}
+      >
         <DrawerTrigger asChild>
           <Button variant="outline">Add Comorbidities</Button>
         </DrawerTrigger>
@@ -55,15 +62,14 @@ export const AddDialogComorbidities = () => {
             <DrawerDescription>Comorbidities:</DrawerDescription>
           </DrawerHeader>
           <div className="overflow-x-scroll pr-20 pl-10">
-            
-               <Comorbiditypage/>
-              
-            </div>
-          <DrawerFooter className="pt-1 px-10">
-            <DrawerClose asChild>
+            <Comorbiditypage />
+          </div>
+
+          <DrawerClose asChild>
+            <div className="pt-2 px-10">
               <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
+            </div>
+          </DrawerClose>
         </DrawerContent>
       </Drawer>
     </>

@@ -24,6 +24,7 @@ import DisabilityPage from "../[patientId]/(new)/newdisabilities/new-patient-dis
 
 export const AddDialogDisabilities = () => {
   const [open, setOpen] = React.useState(false);
+  const [snap, setSnap] = React.useState<number | string | null>("410px");
   const isDesktop = useMediaQuery("(min-width:768px)");
 
   if (isDesktop) {
@@ -47,26 +48,31 @@ export const AddDialogDisabilities = () => {
 
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        snapPoints={["410px", "500px",1]}
+        activeSnapPoint={snap}
+        setActiveSnapPoint={setSnap}
+      >
         <DrawerTrigger asChild>
-            <Button variant="outline">Add Disabilities</Button>
+          <Button variant="outline">Add Disabilities</Button>
         </DrawerTrigger>
         <DrawerContent>
-            <DrawerHeader>
-                <DrawerTitle>Add Disabilities</DrawerTitle>
-                <DrawerDescription>Disabilities</DrawerDescription>
-            </DrawerHeader>
-            <div className="overflow-x-scroll pr-20 pl-10">
-                <DisabilityPage/>
-            </div>
+          <DrawerHeader>
+            <DrawerTitle>Add Disabilities</DrawerTitle>
+            <DrawerDescription>Disabilities</DrawerDescription>
+          </DrawerHeader>
+          <div className="overflow-x-scroll pr-20 pl-10">
+            <DisabilityPage />
+          </div>
 
-            <DrawerFooter className="pt-1 px-10">
-                <DrawerClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-            </DrawerFooter>
+          <DrawerClose asChild>
+            <div className="pt-2 px-10">
+              <Button variant="outline">Cancel</Button>
+            </div>
+          </DrawerClose>
         </DrawerContent>
-        
       </Drawer>
     </>
   );
