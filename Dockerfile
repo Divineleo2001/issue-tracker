@@ -1,8 +1,8 @@
-FROM node:18-alpine
+FROM node:latest
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json .
 
 RUN npm install
 
@@ -10,7 +10,6 @@ COPY . .
 
 RUN npm run build
 
-RUN ls -la
-COPY . ./
+EXPOSE 9060
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

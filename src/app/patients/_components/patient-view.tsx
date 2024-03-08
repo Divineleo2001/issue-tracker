@@ -24,7 +24,7 @@ export function PatientView({
   age,
   gender,
   regId,
-  id
+  id,
 }: {
   name: string;
   age: number;
@@ -68,22 +68,13 @@ export function PatientView({
         </div>
         <div className="flex flex-col gap-2">
           <div className="grid grid-cols-2 gap-2">
-              <AddDialogVitals id={id}/>
+            <AddDialogVitals id={id} />
             {/* <Button>
               <Link href={`/patients/${regId}/newvitals`}>Add Vitals</Link>
             </Button> */}
-
-            <Button>View Vitals</Button>
-            <AddDialogComorbidities/>
-            <Button>View Comorbidities</Button>
-            <AddDialogDisabilities/>
-            <Button>View Disabilities</Button>
-            <AddDialogComments id={id}/>
-            <Button>View Comments</Button>
-            <AddDialogHistory id={id}/>
-            <Button>View History</Button>
+            <AddDialogComments id={id} />
+            <AddDialogHistory id={id} />
           </div>
-        
         </div>
       </CardContent>
       <div className="absolute top-0 right-0 flex flex-col gap-4 p-2">

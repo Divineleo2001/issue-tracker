@@ -4,6 +4,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -22,7 +23,7 @@ import {
 } from "@/components/ui/drawer";
 
 import useMediaQuery from "@/hooks/use-media-query";
-import NewPatientVitals from "../[patientId]/(new)/newvitals/new-patient-vitals";
+import NewPatientVitals from "./(new)/newvitals/new-patient-vitals";
 
 const AddDialogVitals = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);
@@ -40,7 +41,7 @@ const AddDialogVitals = ({ id }: { id: number }) => {
               <DialogDescription>Vitals of Patient ID.{id}</DialogDescription>
             </DialogHeader>
             <NewPatientVitals id={id}  />
-            
+      
           </DialogContent>
         </Dialog>
       </>
@@ -48,21 +49,17 @@ const AddDialogVitals = ({ id }: { id: number }) => {
   }
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen} >
+      <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button variant="outline">Add Vitals</Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">
             <DrawerTitle>Edit profile</DrawerTitle>
-            <DrawerDescription>
-            Vitals of Patient ID.{id}
-            </DrawerDescription>
+            <DrawerDescription>Vitals of Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
           <div className="overflow-x-scroll pr-20 pl-10">
-          
-              <NewPatientVitals id={id} />
-            
+            <NewPatientVitals id={id} />
           </div>
 
           <DrawerFooter className="pt-1 px-10">
