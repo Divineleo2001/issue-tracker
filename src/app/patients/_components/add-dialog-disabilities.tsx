@@ -20,7 +20,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import DisabilityPage from "../[patientId]/(new)/newdisabilities/new-patient-disability";
+import DisabilityPage from "./(new)/newdisabilities/new-patient-disability";
+import DisabilityIcon from "@/components/ui/Icons/DisabilityIcon";
 
 export const AddDialogDisabilities = () => {
   const [open, setOpen] = React.useState(false);
@@ -32,7 +33,9 @@ export const AddDialogDisabilities = () => {
       <>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Add Disabilities</Button>
+            <Button variant="default">
+              <DisabilityIcon />
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
             <DialogHeader>
@@ -51,12 +54,14 @@ export const AddDialogDisabilities = () => {
       <Drawer
         open={open}
         onOpenChange={setOpen}
-        snapPoints={["410px", "500px",1]}
+        snapPoints={["410px", "550px", 1]}
         activeSnapPoint={snap}
         setActiveSnapPoint={setSnap}
       >
         <DrawerTrigger asChild>
-          <Button variant="outline">Add Disabilities</Button>
+          <Button className=" shadow-md" variant="default">
+            <DisabilityIcon />
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>

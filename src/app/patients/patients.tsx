@@ -34,10 +34,10 @@ const PatientsPage = ({ patients }: { patients: PatientData[] }) => {
   // console.log(patients);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto z-10">
       <h1 className="text-4xl font-semibold text-center">Patients</h1>
 
-      <div className="flex-col max-w-md mx-auto md:max-w-none sm:grid sm:grid-cols-2 lg:max-w-7xl lg:mx-auto lg:grid-cols-3 px-5 gap-5">
+      <div className="flex-col max-w-md mx-auto sm:max-w-none sm:grid sm:grid-cols-2 lg:max-w-7xl lg:mx-auto lg:grid-cols-3 px-10 gap-5">
         {patients.map((patient: PatientData) => (
           <div key={patient.id}>
             <PatientView

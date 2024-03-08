@@ -1,7 +1,7 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { ComorbidityForm } from "../patients/[patientId]/(new)/newcommorbidities/new-patient-commorbidity";
+import { ComorbidityForm } from "../patients/_components/(new)/newcommorbidities/new-patient-commorbidity";
 
 export const ComorbidityData = async (values: ComorbidityForm) => {
   const comorbidityUrl = process.env.BACKEND_URL + "api/comorbidity";

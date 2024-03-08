@@ -20,7 +20,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import Comorbiditypage from "../[patientId]/(new)/newcommorbidities/new-patient-commorbidity";
+import Comorbiditypage from "./(new)/newcommorbidities/new-patient-commorbidity";
+import CommorbidityIcon from "@/components/ui/Icons/CommorbidityIcon";
+
 
 export const AddDialogComorbidities = () => {
   const [open, setOpen] = React.useState(false);
@@ -31,7 +33,10 @@ export const AddDialogComorbidities = () => {
       <>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Add Comorbidities</Button>
+            <Button variant="default" className="shadow-md">
+              
+              <CommorbidityIcon />
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
             <DialogHeader>
@@ -54,7 +59,9 @@ export const AddDialogComorbidities = () => {
         setActiveSnapPoint={setSnap}
       >
         <DrawerTrigger asChild>
-          <Button variant="outline">Add Comorbidities</Button>
+          <Button variant="default">
+            <CommorbidityIcon />
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">

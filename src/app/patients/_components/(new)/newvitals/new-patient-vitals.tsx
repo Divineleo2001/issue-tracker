@@ -72,7 +72,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
   };
 
   return (
-    <div className=" mx-auto ">
+    <div className=" mx-auto px-5">
       {/* level of Consciousness */}
       <Form {...Vitalform}>
         <form

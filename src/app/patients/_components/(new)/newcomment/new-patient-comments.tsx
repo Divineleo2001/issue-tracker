@@ -24,7 +24,7 @@ import Spinner from "@/components/Spinner";
 
 export type CommentForm = z.infer<typeof createCommentSchema>;
 
-export const NewPatientIssue = ({ id }: { id:number }) => {
+export const NewPatientIssue = ({ id }: { id: number }) => {
   const router = useRouter();
   const {
     register,
@@ -55,19 +55,24 @@ export const NewPatientIssue = ({ id }: { id:number }) => {
         <form className="space-y-3">
           <ErrorComponent alertTitle="Name" message={errors.comment?.message} />
 
-          <ErrorComponent alertTitle="Issue" message={errors.comment?.message} />
+          <ErrorComponent
+            alertTitle="Issue"
+            message={errors.comment?.message}
+          />
           <Textarea
             className=""
             placeholder="Please provide Comments"
             {...register("comment")}
           />
-
+<div className="hidden">
           <Input
             value={id}
             {...register("patientId")}
             readOnly
             placeholder="Patient ID"
           />
+
+</div>
 
           <Button type="submit">
             Submit

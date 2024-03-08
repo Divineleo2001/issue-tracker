@@ -20,7 +20,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import { HistoryPage } from "../[patientId]/(new)/newhistories/new-patient-history";
+import { HistoryPage } from "./(new)/newhistories/new-patient-history";
 
 const AddDialogHistory = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);

@@ -4,7 +4,6 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -40,8 +39,7 @@ const AddDialogVitals = ({ id }: { id: number }) => {
               <DialogTitle>Add Vitals</DialogTitle>
               <DialogDescription>Vitals of Patient ID.{id}</DialogDescription>
             </DialogHeader>
-            <NewPatientVitals id={id}  />
-      
+            <NewPatientVitals id={id} />
           </DialogContent>
         </Dialog>
       </>
@@ -64,7 +62,9 @@ const AddDialogVitals = ({ id }: { id: number }) => {
 
           <DrawerFooter className="pt-1 px-10">
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <div className="pt-2 pl-4">
+                <Button variant="outline">Cancel</Button>
+              </div>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
