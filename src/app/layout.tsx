@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
 import TanstackProvider from "./providers/providers";
-
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import { fontSans } from "@/fontConfig";
 
 export const metadata: Metadata = {
   title: "Auri Emergency ",

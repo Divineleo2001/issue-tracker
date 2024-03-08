@@ -61,12 +61,11 @@ export const createFormVitalsSchema = z.object({
 });
 
 export const createCommentSchema = z.object({
-  doctorName: z.string().min(2, "Doctor Name Is required"),
-  patientId: z.number().min(1, "Patient ID Is required"),
   comment: z
     .string()
     .min(1, "comment Is required")
     .max(500, "comment must be less than 500 characters"),
+  patientId: z.number().min(1, "Patient ID Is required"),
 });
 
 export const createFormCommentSchema = z.object({
@@ -84,7 +83,7 @@ export const createFormCommentSchema = z.object({
 });
 
 export const createFormPatientSchema = z.object({
-  name: z.string().nullable(),
+  name: z.string(),
   regId: z.string().refine((value) => !isNaN(Number(value)), {
     message: "Registration ID must be a number",
   }),
@@ -100,25 +99,24 @@ export const patientDataSchema = z.object({
   name: z.string(),
   gender: z.string(),
   age: z.number(),
-  createdBy : z.string(),
-  createdDate : z.date(),
-  login : z.string(),
-  lastModifiedBy : z.string(),
-  lastModifiedDate : z.date(),
-
-})
-
-
+  createdBy: z.string(),
+  createdDate: z.date(),
+  login: z.string(),
+  lastModifiedBy: z.string(),
+  lastModifiedDate: z.date(),
+});
 
 export const createComorbiditiesSchema = z.object({
-  cName:z.string().min(2).max(255),
-  description:z.string(),
+  name: z.string().min(2).max(255),
+  description: z.string(),
 });
 
 export const createDisabilitiesSchema = z.object({
-  disabilityName:z.string().min(2).max(255),
-  description:z.string(),
+  name: z.string().min(2).max(255),
+  description: z.string(),
 });
 
-
-
+export const createHistorySchema = z.object({
+  history: z.string(),
+  patientId: z.number(),
+});

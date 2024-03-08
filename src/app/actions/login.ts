@@ -12,7 +12,7 @@ export const LoginUser = async (values: formLogin) => {
     const response = await axios.post(authenticateUrl, {
       username: values.username,
       password: values.password,
-      rememberMe: values.rememberMe,
+    
     });
     await cookieLogin(response.data);
 

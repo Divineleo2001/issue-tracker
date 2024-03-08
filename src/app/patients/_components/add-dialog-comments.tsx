@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,27 +19,26 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
 import useMediaQuery from "@/hooks/use-media-query";
-import NewPatientVitals from "../[patientId]/(new)/newvitals/new-patient-vitals";
+import { NewPatientIssue } from "../[patientId]/(new)/newcomment/new-patient-comments";
 
-const AddDialogVitals = ({ id }: { id: number }) => {
+export const AddDialogComments = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [snap, setSnap] = React.useState<number | string | null>("410px");
+  const isDesktop = useMediaQuery("(min-width:768px)");
   if (isDesktop) {
     return (
       <>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Add Vitals</Button>
+            <Button variant="outline">Add Comments</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] sm:max-h-[800px] overflow-y-scroll">
+          <DialogContent className="sm:max-w-[600] sm:max-h-[800] overflow-y-scroll">
             <DialogHeader>
-              <DialogTitle>Add Vitals</DialogTitle>
-              <DialogDescription>Vitals of Patient ID.{id}</DialogDescription>
+              <DialogTitle>Add Comments</DialogTitle>
+              <DialogDescription>Comments on Patient ID.{id}</DialogDescription>
             </DialogHeader>
-            <NewPatientVitals id={id}  />
-            
+            <NewPatientIssue id={id} />
           </DialogContent>
         </Dialog>
       </>
@@ -48,32 +46,28 @@ const AddDialogVitals = ({ id }: { id: number }) => {
   }
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen} >
+      <Drawer open={open} onOpenChange={setOpen}
+      snapPoints={["410px","500px",1]}
+      activeSnapPoint={snap}
+      setActiveSnapPoint={setSnap}>
         <DrawerTrigger asChild>
-          <Button variant="outline">Add Vitals</Button>
+          <Button variant="outline">Add Comments</Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">
             <DrawerTitle>Edit profile</DrawerTitle>
-            <DrawerDescription>
-            Vitals of Patient ID.{id}
-            </DrawerDescription>
+            <DrawerDescription>Comments on Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
           <div className="overflow-x-scroll pr-20 pl-10">
-          
-              <NewPatientVitals id={id} />
-            
+            <NewPatientIssue id={id} />
           </div>
-
-          <DrawerFooter className="pt-1 px-10">
-            <DrawerClose asChild>
+          <DrawerClose asChild>
+            <div className="pt-1 px-10">
               <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
+            </div>
+          </DrawerClose>
         </DrawerContent>
       </Drawer>
     </>
   );
 };
-
-export default AddDialogVitals;

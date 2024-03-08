@@ -14,6 +14,10 @@ import {
 import Link from "next/link";
 import { MdCameraFront } from "react-icons/md";
 import AddDialogVitals from "./add-dialog-vitals";
+import AddDialogHistory from "./add-dialog-history";
+import { AddDialogComorbidities } from "./add-dialog-commorbidities";
+import { AddDialogComments } from "./add-dialog-comments";
+import { AddDialogDisabilities } from "./add-dialog-disabilities";
 
 export function PatientView({
   name,
@@ -70,13 +74,13 @@ export function PatientView({
             </Button> */}
 
             <Button>View Vitals</Button>
-            <Button>Add Comorbidities</Button>
+            <AddDialogComorbidities/>
             <Button>View Comorbidities</Button>
-            <Button>Add Disabilities</Button>
+            <AddDialogDisabilities/>
             <Button>View Disabilities</Button>
-            <Button>Add Comments</Button>
+            <AddDialogComments id={id}/>
             <Button>View Comments</Button>
-            <Button>Add History</Button>
+            <AddDialogHistory id={id}/>
             <Button>View History</Button>
           </div>
         
