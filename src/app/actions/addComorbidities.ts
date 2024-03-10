@@ -12,7 +12,7 @@ export const ComorbidityData = async (values: ComorbidityForm) => {
     const response = await axios.post(
       comorbidityUrl,
       {
-        cName: values.cName,
+        name: values.name,
         description: values.description,
       },
       {

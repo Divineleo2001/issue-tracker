@@ -1,6 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { DisabilityForm } from "../patients/_components/(new)/newdisabilities/new-patient-disability";
+import axios from "axios";
 
 
 export const DisabilitData = async (values: DisabilityForm) => {
@@ -12,7 +13,7 @@ export const DisabilitData = async (values: DisabilityForm) => {
     const response = await axios.post(
       disabilityUrl,
       {
-        disabilityName: values.disabilityName,
+        name: values.name,
         description: values.description,
       },
       {

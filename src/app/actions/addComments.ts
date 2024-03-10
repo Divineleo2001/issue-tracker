@@ -1,7 +1,8 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { CommentForm } from "../patients/[patientId]/newcomment/page";
+import { CommentForm } from "../patients/_components/(new)/newcomment/new-patient-comments";
+
 
 export const CommentsData = async (values: CommentForm) => {
   const commentsUrl = process.env.BACKEND_URL + "api/comments";
