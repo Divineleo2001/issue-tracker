@@ -29,6 +29,9 @@ const AddDialogHistory = ({ id }: { id: number }) => {
   if (isDesktop) {
     return (
       <>
+        <div className="">
+
+        </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button variant="outline">Add History</Button>
