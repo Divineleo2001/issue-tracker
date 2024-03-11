@@ -1,7 +1,8 @@
 "use server";
 import { cookies } from "next/headers";
-import { DisabilityForm } from "../patients/[patientId]/(new)/newdisabilities/new-patient-disability";
+import { DisabilityForm } from "../patients/_components/(new)/newdisabilities/new-patient-disability";
 import axios from "axios";
+
 
 export const DisabilitData = async (values: DisabilityForm) => {
   const disabilityUrl = process.env.BACKEND_URL + "api/disability";
@@ -12,7 +13,7 @@ export const DisabilitData = async (values: DisabilityForm) => {
     const response = await axios.post(
       disabilityUrl,
       {
-        disabilityName: values.disabilityName,
+        name: values.name,
         description: values.description,
       },
       {

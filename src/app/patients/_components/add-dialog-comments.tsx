@@ -20,7 +20,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import { NewPatientIssue } from "../[patientId]/(new)/newcomment/new-patient-comments";
+import { NewPatientIssue } from "./(new)/newcomment/new-patient-comments";
 
 export const AddDialogComments = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);

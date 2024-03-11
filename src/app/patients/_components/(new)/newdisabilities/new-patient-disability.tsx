@@ -48,7 +48,7 @@ export const DisabilityPage = () => {
   return (
     <div className="">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="sapce-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
             name="name"

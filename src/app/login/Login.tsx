@@ -39,8 +39,13 @@ const Login = () => {
     },
   });
   const handleSubmit = async (values: formLogin) => {
-    await LoginUser(values);
-    router.push("/patients")
+    try {
+      await LoginUser(values);
+      router.push("/patients")
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

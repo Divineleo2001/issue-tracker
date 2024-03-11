@@ -72,14 +72,14 @@ const NewPatientVitals = ({ id }: { id: number }) => {
   };
 
   return (
-    <div className=" mx-auto ">
+    <div className=" mx-auto px-5">
       {/* level of Consciousness */}
       <Form {...Vitalform}>
         <form
           onSubmit={Vitalform.handleSubmit(handleSubmit)}
           className="md:space-y-3"
         >
-          <div className="">
+          <div className="hidden">
             <FormField
               control={Vitalform.control}
               name="patientId"
@@ -329,17 +329,23 @@ const NewPatientVitals = ({ id }: { id: number }) => {
           </div>
           <div className="mt-4">
             {!Vitalform.formState.isValid ? (
-              <Button type="submit" className="w-full">
-                {" "}
-                Save changes{" "}
-              </Button>
-            ) : (
-              <DialogClose asChild>
+              <div>
                 <Button type="submit" className="w-full">
                   {" "}
                   Save changes{" "}
-                </Button>{" "}
-              </DialogClose>
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <DialogClose asChild>
+                  <div>
+                    <Button type="submit" className="w-full">
+                      {" "}
+                      Save changes{" "}
+                    </Button>{" "}
+                  </div>
+                </DialogClose>
+              </div>
             )}
             {/* <Button type="submit">Submit</Button> */}
           </div>

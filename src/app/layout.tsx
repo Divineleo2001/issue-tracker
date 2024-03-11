@@ -23,10 +23,8 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        <TanstackProvider >
-          {children}
-        </TanstackProvider>
-        
+
+        <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import axios from "axios";
-import { VitalsForm } from "../patients/[patientId]/(new)/newvitals/new-patient-vitals";
+import { VitalsForm } from "../patients/_components/(new)/newvitals/new-patient-vitals";
 
 export const VitalsData = async (values: VitalsForm) => {
   const vitalsUrl = process.env.BACKEND_URL + "/api/patient-vitals";
