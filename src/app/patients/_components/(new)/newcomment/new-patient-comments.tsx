@@ -1,87 +1,108 @@
 "use client";
-
 import React from "react";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createFormCommentSchema,
   createCommentSchema,
 } from "@/app/utils/ValidationSchema";
 import { z } from "zod";
-// import ErrorComponent from "@/components/Errors/ErrorComponent";
-// import Spinner from "@/components/Spinner";
-import ErrorComponent from "@/components/Errors/ErrorComponent";
+import { Button } from "@/components/ui/button";
+import { CommentsData } from "@/app/actions/addComments";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import Spinner from "@/components/Spinner";
 
 export type CommentForm = z.infer<typeof createCommentSchema>;
 
-export const NewPatientIssue = ({ id }: { id: number }) => {
-  const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CommentForm>({
+export const PatientComment = ({ id }: { id: number }) => {
+  const form = useForm<CommentForm>({
     resolver: zodResolver(createFormCommentSchema),
+    defaultValues: {
+      comment: "",
+      patientId: id,
+    }, 
   });
-  const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // const onSubmit = async (data: CommentForm) => {
-  //   console.log(data);
-  //   try {
-  //     setIsSubmitting(true);
-  //     data.patientId = parseInt(data.patientId?.toString());
-  //     await axios.post("/api/comments", data);
-  //     router.push(`/patients/${params.patientId}/viewcomments`);
-  //   } catch (error) {
-  //     setIsSubmitting(false);
-  //     setError(`An error occurred while submitting the form. ${error}`);
-  //   }
-  //   console.log(error);
-  // };
+  const handleSubmit = async (values : CommentForm) => {
+    const formattedValues: CommentForm = { ...values, patientId: Number(values.patientId)};
+    console.log(formattedValues);
+    await CommentsData(formattedValues);
+  }
+
   return (
     <>
-      <div className=" ">
-        <form className="space-y-3">
-          <ErrorComponent alertTitle="Name" message={errors.comment?.message} />
+      <div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
+            <div>
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Comments:</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="comments"
+                        {...field}
+                        className="w-full h-32"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="hidden">
+                <FormField
+                  control={form.control}
+                  name="patientId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Patient ID:</FormLabel>
+                      <FormControl>
+                        <Input  {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          <ErrorComponent
-            alertTitle="Issue"
-            message={errors.comment?.message}
-          />
-          <Textarea
-            className=""
-            placeholder="Please provide Comments"
-            {...register("comment")}
-          />
-<div className="hidden">
-          <Input
-            value={id}
-            {...register("patientId")}
-            readOnly
-            placeholder="Patient ID"
-          />
-
-</div>
-
-          <Button type="submit">
-            Submit
-            {isSubmitting && <Spinner />}
-          </Button>
-        </form>
+            </div>
+            <div className="mt-4">
+              {!form.formState.isValid ? (
+                <div>
+                  <Button type="submit" className="w-64">
+                    {" "}
+                    Save changes{" "}
+                  </Button>
+                </div>
+              ) : (
+                  <div>
+                    <DialogClose asChild>
+                      <div>
+                        <Button type="submit" className="w-64">
+                          {" "}
+                          Save changes{" "}
+                        </Button>{" "}
+                      </div>
+                    </DialogClose>
+                  </div>
+                )}
+            </div>
+          </form>
+        </Form>
       </div>
     </>
   );
 };
 
-export default NewPatientIssue;
+export default PatientComment;

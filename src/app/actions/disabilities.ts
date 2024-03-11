@@ -5,8 +5,8 @@ import axios from "axios";
 import { DisabilityForm } from "../patients/_components/(new)/newdisabilities/new-patient-disability";
 
 export const DisabilitData = async (values: DisabilityForm) => {
-  const disabilityUrl = process.env.BACKEND_URL + "api/disabilities";
-  const authToken = cookies().get("accesToken")?.value;
+  const disabilityUrl = process.env.BACKEND_URL + "/api/disabilities";
+  const authToken = cookies().get("accessToken")?.value;
   const bearerToken = `Bearer ${authToken}`;
 
   try {
@@ -22,7 +22,7 @@ export const DisabilitData = async (values: DisabilityForm) => {
         },
       }
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       console.log("Disability added successfully");
     }
   } catch (error) {

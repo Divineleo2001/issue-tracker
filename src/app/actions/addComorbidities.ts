@@ -4,9 +4,9 @@ import { cookies } from "next/headers";
 import { ComorbidityForm } from "../patients/_components/(new)/newcommorbidities/new-patient-commorbidity";
 
 export const ComorbidityData = async (values: ComorbidityForm) => {
-  const comorbidityUrl = process.env.BACKEND_URL + "api/comorbidity";
-  const authToken = cookies().get("accesToken")?.value;
-  const bearerToken = `Bearer${authToken}`;
+  const comorbidityUrl = process.env.BACKEND_URL + "/api/comorbidities";
+  const authToken = cookies().get("accessToken")?.value;
+  const bearerToken = `Bearer ${authToken}`;
 
   try {
     const response = await axios.post(
@@ -21,7 +21,7 @@ export const ComorbidityData = async (values: ComorbidityForm) => {
         },
       }
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       return console.log("Comorbidity added successfully");
     }
   } catch (error) {

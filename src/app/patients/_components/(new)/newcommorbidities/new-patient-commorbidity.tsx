@@ -17,13 +17,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { ComorbidityData } from "@/app/actions/addComorbidities";
+import { DialogClose } from "@/components/ui/dialog";
 
 export type ComorbidityForm = z.infer<typeof createComorbiditiesSchema>;
 export const Comorbiditypage = () => {
-  //const router = useRouter();
-  const [error, setError] = useState("");
-  const [IsSubmitting, setIsSubmitting] = useState(false);
-
   const form = useForm<ComorbidityForm>({
     resolver: zodResolver(createComorbiditiesSchema),
     defaultValues: {
@@ -31,43 +29,65 @@ export const Comorbiditypage = () => {
       description: "",
     },
   });
-  const onSubmit = (data: ComorbidityForm) => {
-    console.log(data);
-    
+  const onSubmit = async (values: ComorbidityForm) => {
+    await ComorbidityData(values)
   };
 
   return (
     <div className="">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Comorbidity Name:</FormLabel>
-                <FormControl>
-                  <Input placeholder="comorbidity name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div>
 
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description:</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Comorbidity Name:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="comorbidity name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description:</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="mt-4">
+            {!form.formState.isValid ? (
+              <div>
+                <Button type="submit" className="w-64">
+                  {" "}
+                  Save changes{" "}
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <DialogClose asChild>
+                  <div>
+                    <Button type="submit" className="w-64">
+                      {" "}
+                      Save changes{" "}
+                    </Button>{" "}
+                  </div>
+                </DialogClose>
+              </div>
             )}
-          />
-          <Button type="submit">Submit</Button>
+          </div>
         </form>
       </Form>
     </div>

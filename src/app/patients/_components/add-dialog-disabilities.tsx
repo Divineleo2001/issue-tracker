@@ -14,7 +14,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -25,7 +24,7 @@ import DisabilityIcon from "@/components/ui/Icons/DisabilityIcon";
 
 export const AddDialogDisabilities = () => {
   const [open, setOpen] = React.useState(false);
-  const [snap, setSnap] = React.useState<number | string | null>("410px");
+  const [snap, setSnap] = React.useState<number | string | null>("500px");
   const isDesktop = useMediaQuery("(min-width:768px)");
 
   if (isDesktop) {
@@ -54,7 +53,7 @@ export const AddDialogDisabilities = () => {
       <Drawer
         open={open}
         onOpenChange={setOpen}
-        snapPoints={["410px", "550px", 1]}
+        snapPoints={["500px", "550px", 1]}
         activeSnapPoint={snap}
         setActiveSnapPoint={setSnap}
       >
@@ -68,14 +67,12 @@ export const AddDialogDisabilities = () => {
             <DrawerTitle>Add Disabilities</DrawerTitle>
             <DrawerDescription>Disabilities</DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-x-scroll pr-20 pl-10">
+          <div className="p-5">
             <DisabilityPage />
           </div>
 
           <DrawerClose asChild>
-            <div className="pt-2 px-10">
-              <Button variant="outline">Cancel</Button>
-            </div>
+              <Button className="m-5" variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerContent>
       </Drawer>
