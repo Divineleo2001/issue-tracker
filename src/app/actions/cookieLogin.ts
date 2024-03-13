@@ -15,5 +15,4 @@ export async function cookieLogin(request: StoreTokenRequest) {
     sameSite: "strict",
     secure: true,
   });
-
 }

@@ -1,28 +1,22 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware(request : NextRequest) {
-  console.log(request.url)
-  const path = request.nextUrl.pathname
+export function middleware(request: NextRequest) {
+  // console.log(request.url)
+  const path = request.nextUrl.pathname;
 
-  const isPublicPath = path === '/login' 
-  const token = request.cookies.get('accessToken')?.value || ""
+  const isPublicPath = path === "/login";
+  const token = request.cookies.get("accessToken")?.value || "";
 
   if (isPublicPath && token) {
-    return NextResponse.redirect(new URL('/patients', request.nextUrl))
+    return NextResponse.redirect(new URL("/patients", request.nextUrl));
   }
 
   if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl))
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 }
 
 export const config = {
-    matcher : [
-        '/login',
-        '/patients/:path*'
-        ,'/',
-        
-    ]
-
-}
+  matcher: ["/", "/login", "/patients/:path*"],
+};
