@@ -24,7 +24,8 @@ import {
 import useMediaQuery from "@/hooks/use-media-query";
 import NewPatientVitals from "./(new)/newvitals/new-patient-vitals";
 
-const AddDialogVitals = ({ id }: { id: number }) => {
+
+function AddDialogVitals({ id }: { id: number; }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   if (isDesktop) {
@@ -40,6 +41,7 @@ const AddDialogVitals = ({ id }: { id: number }) => {
               <DialogDescription>Vitals of Patient ID.{id}</DialogDescription>
             </DialogHeader>
             <NewPatientVitals id={id} />
+
           </DialogContent>
         </Dialog>
       </>
@@ -54,22 +56,25 @@ const AddDialogVitals = ({ id }: { id: number }) => {
         <DrawerContent>
           <DrawerHeader className="text-left">
             <DrawerTitle>Edit profile</DrawerTitle>
-            <DrawerDescription>Vitals of Patient ID.{id}</DrawerDescription>
+            <DrawerDescription>
+              Vitals of Patient ID.{id}
+            </DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-x-scroll  px-5 pt-2 pb-2">
+          <div className="overflow-x-scroll pr-20 pl-10">
+
             <NewPatientVitals id={id} />
+
           </div>
 
-          <DrawerFooter>
+          <DrawerFooter className="pt-1 px-10">
             <DrawerClose asChild>
-
-              <Button className="w-64 mx-5 mt-5" variant="outline">Cancel</Button>
+              <Button variant="outline">Cancel</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
   );
-};
+}
 
 export default AddDialogVitals;
