@@ -4,9 +4,9 @@ import { DisabilityForm } from "../patients/_components/(new)/newdisabilities/ne
 import axios from "axios";
 
 
-export const DisabilitData = async (values: DisabilityForm) => {
-  const disabilityUrl = process.env.BACKEND_URL + "api/disability";
-  const authToken = cookies().get("accesToken")?.value;
+export const DisabilityData = async (values: DisabilityForm) => {
+  const disabilityUrl = process.env.BACKEND_URL + "/api/disabilities";
+  const authToken = cookies().get("accessToken")?.value;
   const bearerToken = `Bearer ${authToken}`;
 
   try {

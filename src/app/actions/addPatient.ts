@@ -23,7 +23,7 @@ export const NewPatientData = async (values: PatientForm) => {
       }
     );
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return console.log("Patient added successfully");
     }
   } catch (error) {

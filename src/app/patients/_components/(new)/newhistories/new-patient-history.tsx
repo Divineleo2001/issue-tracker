@@ -1,4 +1,4 @@
-import { HistoryForm } from "@/app/actions/addHistory";
+import { HistoryData, HistoryForm } from "@/app/actions/addHistory";
 import { createHistorySchema } from "@/app/utils/ValidationSchema";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { DialogClose } from "@/components/ui/dialog";
 
 export const HistoryPage = ({ id }: { id: number }) => {
   const form = useForm<HistoryForm>({
@@ -24,10 +25,16 @@ export const HistoryPage = ({ id }: { id: number }) => {
     },
   });
 
+  const onSubmit = async (values: HistoryForm) => {
+  const formattedValues: HistoryForm = { ...values, patientId: Number(values.patientId)};
+    console.log(formattedValues);
+    await HistoryData(formattedValues);
+  }
+
   return (
     <div className="">
       <Form {...form}>
-        <form className="space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
             name="history"
@@ -56,7 +63,27 @@ export const HistoryPage = ({ id }: { id: number }) => {
               )}
             />
           </div>
-          <Button type="submit">Submit</Button>
+        <div className="mt-4">
+              {!form.formState.isValid ? (
+                <div>
+                  <Button type="submit" className="w-64">
+                    {" "}
+                    Save changes{" "}
+                  </Button>
+                </div>
+              ) : (
+                  <div>
+                    <DialogClose asChild>
+                      <div>
+                        <Button type="submit" className="w-64">
+                          {" "}
+                          Save changes{" "}
+                        </Button>{" "}
+                      </div>
+                    </DialogClose>
+                  </div>
+                )}
+            </div>
         </form>
       </Form>
     </div>

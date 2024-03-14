@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { z } from "zod";
 
 export const createVitalsSchema = z.object({
@@ -65,17 +64,11 @@ export const createCommentSchema = z.object({
     .string()
     .min(1, "comment Is required")
     .max(500, "comment must be less than 500 characters"),
-  patientId: z.number().min(1, "Patient ID Is required"),
+  patientId: z.number()
 });
 
 export const createFormCommentSchema = z.object({
-  doctorName: z.string().min(2, "Doctor Name Is required"),
-  patientId: z
-    .string()
-    .min(1, "Patient ID Is required")
-    .refine((value) => !isNaN(Number(value)), {
-      message: "Patient ID must be a number",
-    }),
+  patientId: z.number(),
   comment: z
     .string()
     .min(1, "comment Is required")

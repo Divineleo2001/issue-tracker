@@ -56,15 +56,14 @@ const AddDialogVitals = ({ id }: { id: number }) => {
             <DrawerTitle>Edit profile</DrawerTitle>
             <DrawerDescription>Vitals of Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-x-scroll pr-20 pl-10">
+          <div className="overflow-x-scroll  px-5 pt-2 pb-2">
             <NewPatientVitals id={id} />
           </div>
 
-          <DrawerFooter className="pt-1 px-10">
+          <DrawerFooter>
             <DrawerClose asChild>
-              <div className="pt-2 pl-4">
-                <Button variant="outline">Cancel</Button>
-              </div>
+
+              <Button className="w-64 mx-5 mt-5" variant="outline">Cancel</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>

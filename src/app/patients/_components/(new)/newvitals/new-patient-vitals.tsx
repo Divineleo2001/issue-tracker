@@ -330,7 +330,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
           <div className="mt-4">
             {!Vitalform.formState.isValid ? (
               <div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-64">
                   {" "}
                   Save changes{" "}
                 </Button>
@@ -339,7 +339,7 @@ const NewPatientVitals = ({ id }: { id: number }) => {
               <div>
                 <DialogClose asChild>
                   <div>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-64">
                       {" "}
                       Save changes{" "}
                     </Button>{" "}

@@ -5,7 +5,7 @@ import { CommentForm } from "../patients/_components/(new)/newcomment/new-patien
 
 
 export const CommentsData = async (values: CommentForm) => {
-  const commentsUrl = process.env.BACKEND_URL + "api/comments";
+  const commentsUrl = process.env.BACKEND_URL + "/api/comments";
   const authToken = cookies().get("accessToken")?.value;
   const bearerToken = `Bearer ${authToken}`;
 
@@ -22,7 +22,7 @@ export const CommentsData = async (values: CommentForm) => {
         },
       }
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       console.log("new comment is being added");
     }
   } catch (error) {

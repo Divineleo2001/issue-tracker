@@ -7,7 +7,7 @@ import { z } from "zod";
 export type HistoryForm = z.infer<typeof createHistorySchema>;
 
 export const HistoryData = async (values: HistoryForm) => {
-  const historyUrl = process.env.BACKEND_URL + "api/histories";
+  const historyUrl = process.env.BACKEND_URL + "/api/histories";
   const authToken = cookies().get("accessToken")?.value;
   const bearerToken = `Bearer ${authToken}`;
 

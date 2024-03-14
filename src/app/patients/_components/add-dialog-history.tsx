@@ -14,7 +14,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -64,14 +63,12 @@ const AddDialogHistory = ({ id }: { id: number }) => {
             <DrawerTitle>History:</DrawerTitle>
             <DrawerDescription>History of Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-x-scroll pr-20 pl-10">
+          <div className="px-5">
             <HistoryPage id={id} />
           </div>
 
           <DrawerClose asChild>
-            <div className="pt-2 px-10">
-              <Button variant="outline">Cancel</Button>
-            </div>
+              <Button className="w-64 mx-5 mt-5" variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerContent>
       </Drawer>

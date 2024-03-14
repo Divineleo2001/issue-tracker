@@ -14,13 +14,12 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useMediaQuery from "@/hooks/use-media-query";
-import { NewPatientIssue } from "./(new)/newcomment/new-patient-comments";
+import { PatientComment } from "./(new)/newcomment/new-patient-comments";
 
 export const AddDialogComments = ({ id }: { id: number }) => {
   const [open, setOpen] = React.useState(false);
@@ -38,7 +37,7 @@ export const AddDialogComments = ({ id }: { id: number }) => {
               <DialogTitle>Add Comments</DialogTitle>
               <DialogDescription>Comments on Patient ID.{id}</DialogDescription>
             </DialogHeader>
-            <NewPatientIssue id={id} />
+            <PatientComment id={id} />
           </DialogContent>
         </Dialog>
       </>
@@ -58,13 +57,11 @@ export const AddDialogComments = ({ id }: { id: number }) => {
             <DrawerTitle>Edit profile</DrawerTitle>
             <DrawerDescription>Comments on Patient ID.{id}</DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-x-scroll pr-20 pl-10">
-            <NewPatientIssue id={id} />
+          <div className="px-5">
+            <PatientComment id={id} />
           </div>
           <DrawerClose asChild>
-            <div className="pt-1 px-10">
-              <Button variant="outline">Cancel</Button>
-            </div>
+              <Button className="w-64 mx-5 mt-5" variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerContent>
       </Drawer>
