@@ -1,8 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -38,19 +37,6 @@ export const NewPatientPage = () => {
       gender : "",
     },
   });
-
-  // const onSubmit = (data: PatientForm) => {
-  //   console.log(data);
-  //   try {
-  //     setIsSubmitting(true);
-  //     axios.post("/api/patients", data);
-  //     router.push("/patients");
-  //   } catch (error) {
-  //     setIsSubmitting(false);
-  //     setError(`An unexpected error occurred: ${error}`);
-  //   }
-  //   console.log(error);
-  // };
 
   const handleSubmit = async (values: PatientForm) => {
     await NewPatientData(values)

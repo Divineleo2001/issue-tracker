@@ -6,6 +6,7 @@ import { AddDialogComorbidities } from "./_components/add-dialog-commorbidities"
 import { AddDialogDisabilities } from "./_components/add-dialog-disabilities";
 
 import PatientIcon from "@/components/ui/Icons/PatientIcon";
+import SignOut from "../SignOut";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     
       <div className=" top-20 sticky p-5 bg-gray-100/70">
         <div className="flex justify-end gap-5 ">
+          <SignOut/>
           <Link href="/patients/new">
             <Button variant="default" className="shadow-md ">
               <PatientIcon />
