@@ -12,7 +12,7 @@ export default async function PatientHome() {
 
   return (
     <>
-      <SignOut /> 
+     
       <PatientsPage patients={initialData} />
     </>
   );
