@@ -1,19 +1,21 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { CommentForm } from "../patients/_components/(new)/newcomment/new-patient-comments";
+import { createHistorySchema } from "../../utils/ValidationSchema";
+import { z } from "zod";
 
+export type HistoryForm = z.infer<typeof createHistorySchema>;
 
-export const CommentsData = async (values: CommentForm) => {
-  const commentsUrl = process.env.BACKEND_URL + "/api/comments";
+export const HistoryData = async (values: HistoryForm) => {
+  const historyUrl = process.env.BACKEND_URL + "/api/histories";
   const authToken = cookies().get("accessToken")?.value;
   const bearerToken = `Bearer ${authToken}`;
 
   try {
     const response = await axios.post(
-      commentsUrl,
+      historyUrl,
       {
-        comment: values.comment,
+        history: values.history,
         patientId: values.patientId,
       },
       {
@@ -22,8 +24,8 @@ export const CommentsData = async (values: CommentForm) => {
         },
       }
     );
-    if (response.status === 201) {
-      console.log("new comment is being added");
+    if (response.status === 200) {
+      console.log("history added");
     }
   } catch (error) {
     console.error(error);

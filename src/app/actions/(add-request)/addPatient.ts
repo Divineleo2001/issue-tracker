@@ -1,6 +1,6 @@
 "use server";
 import axios from "axios";
-import { PatientForm } from "../patients/new/NewPatientPage";
+import { PatientForm } from "../../patients/new/NewPatientPage";
 import { cookies } from "next/headers";
 
 export const NewPatientData = async (values: PatientForm) => {

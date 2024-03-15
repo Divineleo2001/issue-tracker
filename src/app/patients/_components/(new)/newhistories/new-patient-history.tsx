@@ -1,4 +1,3 @@
-import { HistoryData, HistoryForm } from "@/app/actions/addHistory";
 import { createHistorySchema } from "@/app/utils/ValidationSchema";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { DialogClose } from "@/components/ui/dialog";
+import { HistoryData, HistoryForm } from "@/app/actions/(add-request)/addHistory";
 
 export const HistoryPage = ({ id }: { id: number }) => {
   const form = useForm<HistoryForm>({
