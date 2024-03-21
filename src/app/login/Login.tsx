@@ -14,8 +14,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { LoginUser } from "../../actions/login";
+
 import { useRouter } from "next/navigation";
+import { LoginUser } from "../actions/(auth)/login";
 
 
 
