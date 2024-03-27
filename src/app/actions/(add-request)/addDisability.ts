@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { DisabilityForm } from "../patients/_components/(new)/newdisabilities/new-patient-disability";
+import { DisabilityForm } from "../../patients/_components/(new)/newdisabilities/new-patient-disability";
 import axios from "axios";
 
 
