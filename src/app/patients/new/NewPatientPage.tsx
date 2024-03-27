@@ -20,7 +20,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { NewPatientData } from "@/app/actions/addPatient";
+import { NewPatientData } from "@/app/actions/(add-request)/addPatient";
+
 
 export type PatientForm = z.infer<typeof createFormPatientSchema>;
 

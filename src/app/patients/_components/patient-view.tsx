@@ -41,6 +41,7 @@ export function PatientView({
           <div className="flex justify-between px-5 pt-5 gap-5">
             <div>
               <Button variant="outline" className="">
+
                 {/* <Link href={`/patients/${regId}/view-patient-details`}>
                 </Link> */}
                   View
@@ -75,9 +76,6 @@ export function PatientView({
             <div className="flex flex-col gap-2">
               <div className="grid grid-cols-2 gap-2">
                 <AddDialogVitals id={id} />
-                {/* <Button>
-              <Link href={`/patients/${regId}/newvitals`}>Add Vitals</Link>
-            </Button> */}
                 <AddDialogComments id={id} />
                 <AddDialogHistory id={id} />
               </div>

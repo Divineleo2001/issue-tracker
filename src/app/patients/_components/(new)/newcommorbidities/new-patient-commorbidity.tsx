@@ -17,8 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ComorbidityData } from "@/app/actions/addComorbidities";
 import { DialogClose } from "@/components/ui/dialog";
+import { ComorbidityData } from "@/app/actions/(add-request)/addComorbidities";
 
 export type ComorbidityForm = z.infer<typeof createComorbiditiesSchema>;
 export const Comorbiditypage = () => {

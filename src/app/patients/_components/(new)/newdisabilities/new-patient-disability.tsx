@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { DisabilitData } from "@/app/actions/disabilities";
+import { DisabilityData } from "@/app/actions/(add-request)/addDisability";
 
 export type DisabilityForm = z.infer<typeof createDisabilitiesSchema>;
 export const DisabilityPage = () => {
@@ -33,7 +33,7 @@ export const DisabilityPage = () => {
 
   const onSubmit = async(data: DisabilityForm) => {
     console.log(data);
-    await DisabilitData(data);
+    await DisabilityData(data);
   };
 
   return (

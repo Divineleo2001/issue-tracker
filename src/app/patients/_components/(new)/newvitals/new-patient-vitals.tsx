@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
@@ -8,7 +7,6 @@ import {
   createFormVitalsSchema,
   createVitalsSchema,
 } from "@/app/utils/ValidationSchema";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -26,8 +24,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { VitalsData } from "@/app/actions/addVitals";
 import { DialogClose } from "@/components/ui/dialog";
+import { VitalsData } from "@/app/actions/(add-request)/addVitals";
 
 export type VitalsForm = z.infer<typeof createVitalsSchema>;
 
@@ -62,7 +60,6 @@ const NewPatientVitals = ({ id }: { id: number }) => {
         temperature: Number(data.temperature),
       };
       await VitalsData(formattedData);
-      // console.log(data)
       if (Vitalform.formState.isSubmitted) {
         Vitalform.reset();
       }
