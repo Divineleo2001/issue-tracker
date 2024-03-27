@@ -12,7 +12,6 @@ export default async function PatientHome() {
 
   return (
     <>
-     
       <PatientsPage patients={initialData} />
     </>
   );
