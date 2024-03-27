@@ -8,7 +8,7 @@ import {
 } from "@/app/utils/ValidationSchema";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { CommentsData } from "@/app/actions/addComments";
+
 import {
   Form,
   FormControl,
@@ -20,6 +20,7 @@ import {
 import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { CommentsData } from "@/app/actions/(add-request)/addComments";
 
 export type CommentForm = z.infer<typeof createCommentSchema>;
 

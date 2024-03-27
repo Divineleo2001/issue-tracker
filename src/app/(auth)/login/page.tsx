@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Login from "./Login";
-import Singup from "../signup/Singup";
+import SignUp from "../sign-up/SignUp";
 
 const LoginPage = () => {
   return (
@@ -24,7 +24,7 @@ const LoginPage = () => {
           <TabsContent value="signup">
             <Card>
               <CardContent className="">
-                <Singup />
+                <SignUp />
               </CardContent>
               <CardFooter />
             </Card>

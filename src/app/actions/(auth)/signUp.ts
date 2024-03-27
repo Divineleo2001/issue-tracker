@@ -1,6 +1,6 @@
 "use server";
+import { formSignup } from "@/app/(auth)/sign-up/SignUp";
 import axios from "axios";
-import { formSignup } from "../signup/Singup";
 
 export const SignupUser = async (values: formSignup) => {
   const signupUrl = process.env.BACKEND_URL + "/api/register";

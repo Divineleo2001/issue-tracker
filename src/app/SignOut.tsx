@@ -1,9 +1,9 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { deleteCookie } from "@/app/actions/removeCookies";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { deleteCookie } from "./actions/(auth)/removeCookies";
  
 const SignOut = () => {
     const router = useRouter()

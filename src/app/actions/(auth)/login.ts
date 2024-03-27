@@ -1,6 +1,6 @@
 "use server";
 import axios from "axios";
-import { formLogin } from "../login/Login";
+import { formLogin } from "../../(auth)/login/Login";
 import { cookieLogin } from "./cookieLogin";
 import { cookies } from "next/headers";
 

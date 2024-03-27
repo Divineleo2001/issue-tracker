@@ -10,11 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React, { useReducer } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/router";
-import { SignupUser } from "../actions/signup";
+import { SignupUser } from "../../actions/(auth)/signUp";
 
 const formschema = z
   .object({
@@ -37,8 +35,7 @@ const formschema = z
 
 export type formSignup = z.infer<typeof formschema>;
 
-const Singup = () => {
-  //const router = useRouter();
+const SignUp= () => {
   const form = useForm<formSignup>({
     resolver: zodResolver(formschema),
     defaultValues: {
@@ -54,7 +51,6 @@ const Singup = () => {
   {
     try{
       await SignupUser(values);
-      //router.push("/login");
     }
     catch(error)
     {
@@ -163,4 +159,4 @@ const Singup = () => {
     </div>
   );
 };
-export default Singup;
+export default SignUp;
