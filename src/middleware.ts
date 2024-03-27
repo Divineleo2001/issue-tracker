@@ -6,8 +6,7 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const isPublicPath = path === "/login";
-  const token = request.cookies.get("accessToken")?.value || request.cookies.get("_vercel_jwt")?.value ;
-
+  const token = request.cookies.get("accessToken")?.value 
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/patients", request.nextUrl));
   }
