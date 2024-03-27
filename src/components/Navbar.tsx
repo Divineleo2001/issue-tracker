@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <nav
       className="flex  border-b pb-10 pt-10
-      pr-10 pl-5 md:pr-0 md:pl-0 h-14 items-center justify-around bg-blue-100 sticky top-0
+      pr-10 pl-5 md:pr-0 md:pl-0 h-14 items-center justify-around bg-blue-100 sticky top-0 overflow-x-hidden
     "
     >
       <Link href="/">
